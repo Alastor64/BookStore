@@ -27,7 +27,7 @@ public:
     {
         info_len = 2 + extra_info;
     }
-    IO_base(const string &filename) : file_name(filename)
+    IO_base(const string &filename) : file_name("./data/" + filename)
     {
         info_len = 2 + extra_info;
     }
@@ -48,7 +48,7 @@ public:
     void initialise(string FN = "")
     {
         if (FN != "")
-            file_name = FN;
+            file_name = "./data/" + FN;
         file = fopen(file_name.c_str(), "wb");
         int tmp = 0;
         for (int i = 0; i < info_len; i++)
