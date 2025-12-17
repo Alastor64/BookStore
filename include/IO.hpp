@@ -1,4 +1,4 @@
-#pragma
+#pragma once
 #include <string>
 #include <assert.h>
 using std::string;
@@ -10,25 +10,28 @@ protected:
     int info_len;
     int extra_info;
     virtual int sizeofT() = 0;
-    int last;          //= -1;最后一个被delete的位置距文件头的偏移量
-    int back;          //= info_len * sizeof(int);文件字节数
-    void updateinfo(); // 更新必要info信息last和back
+    int last;                //= -1;最后一个被delete的位置距文件头的偏移量
+    int back;                //= info_len * sizeof(int);文件字节数
+    void updateinfo();       // 更新必要info信息last和back
+    IO_base();               // 默认文件名为空 extra_info=0
+    IO_base(int extra_info); // 默认文件名为空
+    IO_base(const string &filename, int extra_info = 0, bool NEED_INIT = 0);
 
 public:
-    IO_base(int extra_info = 0); // 默认文件名为空
-    IO_base(const string &filename, int extra_info = 0);
-    int reload(string FN = "");      // 读取名为FN的文件并绑定，留空则读取原绑定文件
-    void initialise(string FN = ""); // 初始化名为FN的文件并绑定，留空则初始化原绑定文件
-    void Get_info(int &tmp, int n);
+    int reload(const string &FN = "");      // 读取名为FN的文件并绑定，留空则读取原绑定文件
+    void initialise(const string &FN = ""); // 初始化名为FN的文件并绑定，留空则初始化原绑定文件
+    int Get_info(int n);
     void Write_info(int tmp, int n);
     int Peep(); // 返回下一个插入索引 未测试
     int Write(const void *t);
     void Update(void *t, const int index);
     void Read(void *t, const int index);
     void Delete(const int index); // 未测试
+    int frontIndex();             // 类存储起始索引 未测试
+    int backIndex();              // 类存储截止索引 未测试
 };
 
-template <class T, int extra_info = 0>
+template <class T, int EXTRA_INFO = 0>
 class IO : public IO_base
 {
 protected:
@@ -38,16 +41,16 @@ protected:
     }
 
 public:
-    IO() : IO_base(extra_info) {}
-    IO(const string &filename) : IO_base(filename, extra_info) {}
-    static IO<T> *instance(const string &className)
+    IO() : IO_base(EXTRA_INFO) {}
+    IO(const string &filename, bool NEED_INIT = 0) : IO_base(filename, EXTRA_INFO, NEED_INIT) {}
+    static IO<T, EXTRA_INFO> *instance(const string &className)
     {
-        static IO<T> Instance(".data"); // WARNING!
+        static IO<T, EXTRA_INFO> Instance(className + ".data", 1); // WARNING!
         return &Instance;
     }
 };
 
-template <class T, int extra_info = 2>
+template <class T, int EXTRA_INFO = 2>
 class MemoryRiver : public IO_base
 {
 protected:
@@ -57,11 +60,11 @@ protected:
     }
 
 public:
-    MemoryRiver() : IO_base(extra_info) {}
-    MemoryRiver(const string &filename) : IO_base(filename, extra_info) {}
+    MemoryRiver() : IO_base(EXTRA_INFO) {}
+    MemoryRiver(const string &filename) : IO_base(filename, EXTRA_INFO) {}
     void get_info(int &tmp, int n)
     {
-        this->Get_info(tmp, n - 1);
+        tmp = this->Get_info(n - 1);
     }
     void write_info(int tmp, int n)
     {

@@ -1,4 +1,5 @@
 #include "IO.hpp"
+#include "STRINGS.hpp"
 // protected
 
 void IO_base::updateinfo()
@@ -11,18 +12,27 @@ void IO_base::updateinfo()
     fclose(file);
 }
 
+IO_base::IO_base() : IO_base(0) {}
+
+IO_base::IO_base(int EXTRA_INFO)
+{
+    extra_info = EXTRA_INFO;
+    info_len = 2 + EXTRA_INFO;
+}
+
+IO_base::IO_base(const string &filename, int EXTRA_INFO, bool NEED_INIT) : IO_base(EXTRA_INFO)
+{
+    file_name = DATA_PATH + filename;
+    if (NEED_INIT)
+    {
+        if (!reload())
+            initialise();
+    }
+}
+
 // public
-IO_base::IO_base(int extra_info = 0)
-{
-    info_len = 2 + extra_info;
-}
 
-IO_base::IO_base(const string &filename, int extra_info = 0) : file_name("./data/" + filename)
-{
-    info_len = 2 + extra_info;
-}
-
-int IO_base::reload(string FN = "")
+int IO_base::reload(const string &FN)
 {
     if (FN != "")
         file_name = FN;
@@ -37,10 +47,10 @@ int IO_base::reload(string FN = "")
     return 0;
 }
 
-void IO_base::initialise(string FN = "")
+void IO_base::initialise(const string &FN)
 {
     if (FN != "")
-        file_name = "./data/" + FN;
+        file_name = DATA_PATH + FN;
     file = fopen(file_name.c_str(), "wb");
     int tmp = 0;
     for (int i = 0; i < info_len; i++)
@@ -53,14 +63,16 @@ void IO_base::initialise(string FN = "")
     updateinfo();
 }
 
-void IO_base::Get_info(int &tmp, int n)
+int IO_base::Get_info(int n)
 {
     if (n >= extra_info)
-        return;
+        return 0;
+    int tmp;
     file = fopen(file_name.c_str(), "rb+");
-    fseek(file, (n + 2) * sizeof(int), SEEK_SET);
+    fseek(file, (n + info_len - extra_info) * sizeof(int), SEEK_SET);
     fread(&tmp, sizeof(int), 1, file);
     fclose(file);
+    return tmp;
 }
 
 void IO_base::Write_info(int tmp, int n)
@@ -68,7 +80,7 @@ void IO_base::Write_info(int tmp, int n)
     if (n >= extra_info)
         return;
     file = fopen(file_name.c_str(), "rb+");
-    fseek(file, (n + 2) * sizeof(int), SEEK_SET);
+    fseek(file, (n + info_len - extra_info) * sizeof(int), SEEK_SET);
     fwrite(&tmp, sizeof(int), 1, file);
     fclose(file);
 }
@@ -140,4 +152,14 @@ void IO_base::Delete(const int index)
     fclose(file);
     last = index;
     updateinfo();
+}
+
+int IO_base::frontIndex()
+{
+    return info_len * sizeofT();
+}
+
+int IO_base::backIndex()
+{
+    return back;
 }

@@ -4,9 +4,24 @@
 #include <filesystem>
 #include <stdio.h>
 #include "Initializer.hpp"
+#include "Vector.hpp"
 int main()
 {
     Init();
+    Vector<int> s("abab");
+
+    s.pop_back();
+    s.push_back(2);
+    s.push_back(4);
+    s.push_back(6);
+    s.pop_back();
+    s.update();
+    Vector<int> t("abab");
+    for (int i = 0; i < t.size(); i++)
+    {
+        printf("%d ", t.at(i));
+    }
+    printf("\n");
     // std::string s = std::filesystem::canonical("/proc/self/exe").parent_path().string() + "/data";
     fopen("./data/test", "w");
     IO<int> a("data");
