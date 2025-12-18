@@ -4,7 +4,7 @@
 #include <string>
 using std::string;
 template <class T>
-class Vector : public std::vector<T>
+class Vector : public std::vector<T> // 未测试
 {
 protected:
     const string filename;

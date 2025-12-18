@@ -1,6 +1,6 @@
 #pragma once
 #include "IO.hpp"
-class Base
+class Base // 未测试
 {
 protected:
     virtual IO_base *Data() = 0; // WARNING nullptr runtime error!
