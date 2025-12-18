@@ -158,8 +158,3 @@ int IO_base::frontIndex()
 {
     return info_len * sizeofT();
 }
-
-int IO_base::backIndex()
-{
-    return back;
-}

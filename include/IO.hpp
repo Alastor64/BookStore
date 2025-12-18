@@ -28,7 +28,6 @@ public:
     void Read(void *t, const int index);
     void Delete(const int index); // 未测试
     int frontIndex();             // 类存储起始索引 未测试
-    int backIndex();              // 类存储截止索引 未测试
 };
 
 template <class T, int EXTRA_INFO = 0>
