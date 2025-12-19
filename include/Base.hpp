@@ -7,6 +7,12 @@ protected:
 
 public:
     int THIS;
+    Base() {}
+    Base(int _THIS)
+    {
+        THIS = _THIS;
+        read();
+    }
     void write() // 将自己插入文件
     {
         THIS = Data()->Peep();
