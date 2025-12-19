@@ -9,18 +9,9 @@ namespace NAME // 未测试
         VISIBLE,    // 除不可见字符以外 ASCII 字符
         COMMON,     // 除不可见字符和英文双引号以外 ASCII 字符
     };
-    bool numLetter(char c) // 数字，字母，下划线
-    {
-        return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '_');
-    }
-    bool visible(char c) // 除不可见字符以外 ASCII 字符
-    {
-        return (c > ' ' && c < 127);
-    }
-    bool common(char c) // 除不可见字符和英文双引号以外 ASCII 字符
-    {
-        return (c > ' ' && c < 127) && (c != '\"' && c != '\"');
-    }
+    bool numLetter(char c); // 数字，字母，下划线;
+    bool visible(char c);   // 除不可见字符以外 ASCII 字符;
+    bool common(char c);    // 除不可见字符和英文双引号以外 ASCII 字符
 }
 template <int size, NAME::NAME_TYPE T>
 class Name : std::array<char, size> // 未测试
