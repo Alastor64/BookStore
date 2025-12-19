@@ -9,6 +9,7 @@ set(MY_SOURCES
     src/main.cpp
     src/Initializer.cpp
     src/IO.cpp
+    src/User.cpp
 )
 
 # set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
