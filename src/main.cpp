@@ -9,11 +9,13 @@
 int main()
 {
     Init();
-    std::string S;
-    std::cin >> S;
-    Name<20, NUM_LETTER> A;
-    if (A.check(S))
-        A = S;
+    char ss[100];
+    std::cin.getline(ss, 100);
+    std::string S(ss);
+    Name<20, NAME::COMMON> A;
+    // if (A.check(S))
+    A = S;
+    A.print();
     Vector<int> s("abab");
 
     s.pop_back();
