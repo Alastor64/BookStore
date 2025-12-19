@@ -5,9 +5,15 @@
 #include <stdio.h>
 #include "Initializer.hpp"
 #include "Vector.hpp"
+#include "Name.hpp"
 int main()
 {
     Init();
+    std::string S;
+    std::cin >> S;
+    Name<20, NUM_LETTER> A;
+    if (A.check(S))
+        A = S;
     Vector<int> s("abab");
 
     s.pop_back();

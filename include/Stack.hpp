@@ -1,12 +1,11 @@
 #pragma once
 #include "IO.hpp"
 #include <string>
-using std::string;
 template <class T>
 class Stack // 未测试
 {
 protected:
-    string filename;
+    std::string filename;
     T topElement;
     int n;           // 栈中元素数量
     int fileSize;    // 当前数据文件能容纳元素数量
@@ -20,7 +19,7 @@ protected:
     }
 
 public:
-    Stack(const string &FN) : filename(FN) // 仅读取栈顶，空栈不读取
+    Stack(const std::string &FN) : filename(FN) // 仅读取栈顶，空栈不读取
     {
         n = Data()->Get_info(0);
         fileSize = Data()->Get_info(1);

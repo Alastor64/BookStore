@@ -20,7 +20,7 @@ IO_base::IO_base(int EXTRA_INFO)
     info_len = 2 + EXTRA_INFO;
 }
 
-IO_base::IO_base(const string &filename, int EXTRA_INFO, bool NEED_INIT) : IO_base(EXTRA_INFO)
+IO_base::IO_base(const std::string &filename, int EXTRA_INFO, bool NEED_INIT) : IO_base(EXTRA_INFO)
 {
     file_name = DATA_PATH + filename;
     if (NEED_INIT)
@@ -32,7 +32,7 @@ IO_base::IO_base(const string &filename, int EXTRA_INFO, bool NEED_INIT) : IO_ba
 
 // public
 
-int IO_base::reload(const string &FN)
+int IO_base::reload(const std::string &FN)
 {
     if (FN != "")
         file_name = FN;
@@ -47,7 +47,7 @@ int IO_base::reload(const string &FN)
     return 0;
 }
 
-void IO_base::initialise(const string &FN)
+void IO_base::initialise(const std::string &FN)
 {
     if (FN != "")
         file_name = DATA_PATH + FN;

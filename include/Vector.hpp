@@ -2,19 +2,18 @@
 #include "IO.hpp"
 #include <vector>
 #include <string>
-using std::string;
 template <class T>
 class Vector : public std::vector<T> // 未测试
 {
 protected:
-    const string filename;
+    const std::string filename;
     IO<T, 1> *Data() // return IO<T, 1>::instance(filename);
     {
         return IO<T, 1>::instance(filename);
     }
 
 public:
-    Vector(const string &FN) : filename(FN) // reload and then initialize if failed 未测试
+    Vector(const std::string &FN) : filename(FN) // reload and then initialize if failed 未测试
     {
         this->clear();
         int n = Data()->Get_info(0);
