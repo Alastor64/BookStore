@@ -1,6 +1,7 @@
 #pragma once
 #include <array>
 #include <string>
+#include <math.h>
 namespace NAME // 未测试
 {
     enum NAME_TYPE
@@ -14,7 +15,7 @@ namespace NAME // 未测试
     bool common(char c);    // 除不可见字符和英文双引号以外 ASCII 字符
 }
 template <int size, NAME::NAME_TYPE T>
-class Name : std::array<char, size> // 未测试
+class Name : public std::array<char, size> // 未测试
 {
 
 public:
@@ -22,6 +23,8 @@ public:
     Name()
     {
         length = 0;
+        for (int i = 0; i < size; i++)
+            this->at(i) = '\0';
     }
     Name(const std::string &s)
     {
@@ -30,6 +33,8 @@ public:
         length = s.length();
         for (int i = 0; i < length; i++)
             this->at(i) = s[i];
+        for (int i = length; i < size; i++)
+            this->at(i) = '\0';
     }
     static bool check(const std::string &s) // 检查字符合法性
     {
@@ -53,3 +58,37 @@ public:
             printf("%c", this->at(i));
     }
 };
+
+template <int size, NAME::NAME_TYPE T>
+bool operator>(const Name<size, T> &a, const Name<size, T> &b)
+{
+    for (int i = 0; i < std::min(a.length, b.length); i++)
+    {
+        if (a.at(i) > b.at(i))
+            return 1;
+        if (a.at(i) < b.at(i))
+            return 0;
+    }
+    return a.length > b.length;
+}
+
+template <int size, NAME::NAME_TYPE T>
+bool operator<(const Name<size, T> &a, const Name<size, T> &b)
+{
+    return b > a;
+}
+template <int size, NAME::NAME_TYPE T>
+bool operator!=(const Name<size, T> &a, const Name<size, T> &b)
+{
+    if (a.length != b.length)
+        return 1;
+    for (int i = 0; i < a.length; i++)
+        if (a.at(i) != b.at(i))
+            return 1;
+    return 0;
+}
+template <int size, NAME::NAME_TYPE T>
+bool operator==(const Name<size, T> &a, const Name<size, T> &b)
+{
+    return !(a != b);
+}

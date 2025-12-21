@@ -18,16 +18,19 @@ protected:
     IO_base(const std::string &filename, int extra_info = 0, bool NEED_INIT = 0);
 
 public:
+    int fileSize;                                // 文件当前能存储类的最大数量
     int reload(const std::string &FN = "");      // 读取名为FN的文件并绑定，留空则读取原绑定文件
     void initialise(const std::string &FN = ""); // 初始化名为FN的文件并绑定，留空则初始化原绑定文件
     int Get_info(int n);
     void Write_info(int tmp, int n);
     int Peep(); // 返回下一个插入索引 未测试
     int Write(const void *t);
+    int Write(const void *t, const int num); // WARNING 仅用于不使用Delete的类型
     void Update(void *t, const int index);
+    void Update(void *t, const int index, const int num); // WARNING 仅用于不使用Delete的类型
     void Read(void *t, const int index);
-    void Delete(const int index); // 未测试
-    int frontIndex();             // 类存储起始索引 未测试
+    void Delete(const int index);
+    int frontIndex(); // 类存储起始索引
 };
 
 template <class T, int EXTRA_INFO = 0>

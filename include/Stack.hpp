@@ -5,7 +5,7 @@ template <class T>
 class Stack // 未测试
 {
 protected:
-    std::string filename;
+    const std::string filename;
     T topElement;
     int n;           // 栈中元素数量
     int fileSize;    // 当前数据文件能容纳元素数量

@@ -1,48 +1,118 @@
-#include "IO.hpp"
-#include <iostream>
-#include <string>
-#include <filesystem>
-#include <stdio.h>
+// #include "IO.hpp"
+// #include <iostream>
+// #include <string>
+// #include <filesystem>
+// #include <stdio.h>
+// #include "Initializer.hpp"
+// #include "Vector.hpp"
+// #include "Name.hpp"
+// #include "List.hpp"
+// #include "Map.hpp"
+// std::array<int, 5> kkk;
 #include "Initializer.hpp"
-#include "Vector.hpp"
+#include "Map.hpp"
 #include "Name.hpp"
+#include <string>
+#include <iostream>
+#include <stdio.h>
+#include <vector>
+typedef Name<64, NAME::VISIBLE> str;
+std::vector<int> ans;
+str c;
 int main()
 {
     Init();
-    char ss[100];
-    std::cin.getline(ss, 100);
-    std::string S(ss);
-    Name<20, NAME::COMMON> A;
-    // if (A.check(S))
-    A = S;
-    A.print();
-    Vector<int> s("abab");
-
-    s.pop_back();
-    s.push_back(2);
-    s.push_back(4);
-    s.push_back(6);
-    s.pop_back();
-    s.update();
-    Vector<int> t("abab");
-    for (int i = 0; i < t.size(); i++)
+    Map<str> mp("DATA");
+    int n, x;
+    scanf("%d", &n);
+    std::string S;
+    while (n--)
     {
-        printf("%d ", t.at(i));
+        std::cin >> S;
+        if (S[0] == 'i')
+        {
+            // printf("I\n");#
+            std::cin >> S;
+            c = S;
+            scanf("%d", &x);
+            mp.insert(std::make_pair(c, x));
+        }
+        else if (S[0] == 'd')
+        {
+            // printf("D\n");#
+            std::cin >> S;
+            c = S;
+            scanf("%d", &x);
+            mp.eraze(std::make_pair(c, x));
+        }
+        else if (S[0] == 'f')
+        {
+            // printf("F\n");#
+            std::cin >> S;
+            c = S;
+            mp.show(c, ans);
+            // printf("oo\n");#
+            if (ans.empty())
+                printf("null");
+            else
+                for (int i = 0; i < ans.size(); i++)
+                    printf("%d ", ans.at(i));
+            printf("\n");
+        }
     }
-    printf("\n");
-    // std::string s = std::filesystem::canonical("/proc/self/exe").parent_path().string() + "/data";
-    fopen("./data/test", "w");
-    IO<int> a("data");
-    a.initialise();
-    int b = 10;
-    int c = a.Write(&b);
-    b++;
-    int d = a.Write(&b);
-    int k;
-    a.Read(&k, c);
-    printf("%d\n", k);
-    a.Read(&k, d);
-    printf("%d\n", k);
-    // std::cout << std::string(std::filesystem::canonical("/proc/self/exe").parent_path().string());
     return 0;
 }
+// Map<int> mp("mapii");
+// std::vector<int> kk;
+// kk.push_back(1);
+// kk.push_back(2);
+// kk.push_back(3);
+// kk.push_back(4);
+// kk.push_back(5);
+// kk.insert(kk.begin() + 5, 0);
+// for (int i = 0; i < kk.size(); i++)
+//     printf("%d ", kk[i]);
+// printf("\n");
+// // kkk.
+// for (int i = 0; i < kkk.max_size(); i++)
+//     printf("%d ", kkk[i]);
+// printf("\n");
+
+// Head<int> abab;
+// List<int> l("bhb");
+// // printf("%d\n", l.locate(1).first);
+// char ss[100];
+// std::cin.getline(ss, 100);
+// std::string S(ss);
+// Name<20, NAME::COMMON> A;
+// // if (A.check(S))
+// A = S;
+// A.print();
+// Vector<int> s("abab");
+
+// s.pop_back();
+// s.push_back(2);
+// s.push_back(4);
+// s.push_back(6);
+// s.pop_back();
+// s.update();
+// Vector<int> t("abab");
+// for (int i = 0; i < t.size(); i++)
+// {
+//     printf("%d ", t.at(i));
+// }
+// printf("\n");
+// // std::string s = std::filesystem::canonical("/proc/self/exe").parent_path().string() + "/data";
+// fopen("./data/test", "w");
+// IO<int> a("data");
+// a.initialise();
+// int b = 10;
+// int c = a.Write(&b);
+// b++;
+// int d = a.Write(&b);
+// int k;
+// a.Read(&k, c);
+// printf("%d\n", k);
+// a.Read(&k, d);
+// printf("%d\n", k);
+// // std::cout << std::string(std::filesystem::canonical("/proc/self/exe").parent_path().string());
