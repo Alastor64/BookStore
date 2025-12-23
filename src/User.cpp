@@ -1,5 +1,17 @@
 #include "User.hpp"
-User::User(int _THIS) : Base(_THIS)
+User::User(int _THIS) : Base(_THIS) {}
+bool isPRIVILEGE(const std::string &s)
 {
-    this->read();
+    if (s.length() != 1)
+        return 0;
+    switch (s.at(0))
+    {
+    case '0':
+    case '1':
+    case '3':
+    case '7':
+    default:
+        return 0;
+    }
+    return 1;
 }

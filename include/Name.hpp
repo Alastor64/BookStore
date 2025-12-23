@@ -2,19 +2,19 @@
 #include <array>
 #include <string>
 #include <math.h>
-namespace NAME // 未测试
+enum NAME_TYPE
 {
-    enum NAME_TYPE
-    {
-        NUM_LETTER, // 数字，字母，下划线
-        VISIBLE,    // 除不可见字符以外 ASCII 字符
-        COMMON,     // 除不可见字符和英文双引号以外 ASCII 字符
-    };
-    bool numLetter(char c); // 数字，字母，下划线;
-    bool visible(char c);   // 除不可见字符以外 ASCII 字符;
-    bool common(char c);    // 除不可见字符和英文双引号以外 ASCII 字符
+    NUM_LETTER, // 数字，字母，下划线
+    VISIBLE,    // 除不可见字符以外 ASCII 字符
+    COMMON,     // 除不可见字符和英文双引号以外 ASCII 字符
+};
+namespace NAME
+{
+    static bool numLetter(char c); // 数字，字母，下划线;
+    bool visible(char c);          // 除不可见字符以外 ASCII 字符;
+    bool common(char c);           // 除不可见字符和英文双引号以外 ASCII 字符
 }
-template <int size, NAME::NAME_TYPE T>
+template <int size, NAME_TYPE T>
 class Name : public std::array<char, size> // 未测试
 {
 
@@ -59,7 +59,7 @@ public:
     }
 };
 
-template <int size, NAME::NAME_TYPE T>
+template <int size, NAME_TYPE T>
 bool operator>(const Name<size, T> &a, const Name<size, T> &b)
 {
     for (int i = 0; i < std::min(a.length, b.length); i++)
@@ -72,12 +72,12 @@ bool operator>(const Name<size, T> &a, const Name<size, T> &b)
     return a.length > b.length;
 }
 
-template <int size, NAME::NAME_TYPE T>
+template <int size, NAME_TYPE T>
 bool operator<(const Name<size, T> &a, const Name<size, T> &b)
 {
     return b > a;
 }
-template <int size, NAME::NAME_TYPE T>
+template <int size, NAME_TYPE T>
 bool operator!=(const Name<size, T> &a, const Name<size, T> &b)
 {
     if (a.length != b.length)
@@ -87,7 +87,7 @@ bool operator!=(const Name<size, T> &a, const Name<size, T> &b)
             return 1;
     return 0;
 }
-template <int size, NAME::NAME_TYPE T>
+template <int size, NAME_TYPE T>
 bool operator==(const Name<size, T> &a, const Name<size, T> &b)
 {
     return !(a != b);

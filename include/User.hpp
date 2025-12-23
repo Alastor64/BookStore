@@ -1,16 +1,14 @@
 #pragma once
 #include "Base.hpp"
 #include "Name.hpp"
-namespace USER
+enum class PRIVILEGE
 {
-    enum PRIVILEGE
-    {
-        VISITOR = 0,
-        GUEST = 1,
-        STARFF = 3,
-        BOSS = 7,
-    };
-}
+    VISITOR = 0,
+    GUEST = 1,
+    STARFF = 3,
+    BOSS = 7,
+};
+bool isPRIVILEGE(const std::string &s);
 class User : public Base
 {
 protected:
@@ -20,10 +18,10 @@ protected:
     }
 
 public:
-    Name<30, NAME::NUM_LETTER> ID;
-    Name<30, NAME::NUM_LETTER> password;
-    Name<30, NAME::VISIBLE> name;
-    USER::PRIVILEGE privilege;
+    Name<30, NAME_TYPE::NUM_LETTER> ID;
+    Name<30, NAME_TYPE::NUM_LETTER> password;
+    Name<30, NAME_TYPE::VISIBLE> name;
+    PRIVILEGE privilege;
     User() {}
     User(int _THIS);
 };
