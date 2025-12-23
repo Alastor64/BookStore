@@ -11,6 +11,7 @@ set(MY_SOURCES
     src/IO.cpp
     src/User.cpp
     src/Name.cpp
+    src/UserManager.cpp
 )
 
 # set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)

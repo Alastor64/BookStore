@@ -22,6 +22,7 @@ str c;
 int main()
 {
     Init();
+    Name<20, NAME::COMMON> SS = std::string("ababab");
     Map<str> mp("DATA");
     int n, x;
     scanf("%d", &n);
