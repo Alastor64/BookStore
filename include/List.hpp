@@ -27,7 +27,7 @@ private:
 
 protected:
     Array tmp;
-    const std::string filename;
+    std::string filename;
     Vector<Head<T>> heads;
     IO<Array, 0> *Data()
     {

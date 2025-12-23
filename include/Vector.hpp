@@ -8,7 +8,7 @@ template <class T>
 class Vector : public std::vector<T>
 {
 protected:
-    const std::string filename;
+    std::string filename;
     IO<T, 1> *Data() // return IO<T, 1>::instance(filename);
     {
         return IO<T, 1>::instance(filename);

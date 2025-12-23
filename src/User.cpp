@@ -10,6 +10,7 @@ bool isPRIVILEGE(const std::string &s)
     case '1':
     case '3':
     case '7':
+        break;
     default:
         return 0;
     }

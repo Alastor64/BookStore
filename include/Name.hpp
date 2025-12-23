@@ -10,9 +10,9 @@ enum NAME_TYPE
 };
 namespace NAME
 {
-    static bool numLetter(char c); // 数字，字母，下划线;
-    bool visible(char c);          // 除不可见字符以外 ASCII 字符;
-    bool common(char c);           // 除不可见字符和英文双引号以外 ASCII 字符
+    bool numLetter(char c); // 数字，字母，下划线;
+    bool visible(char c);   // 除不可见字符以外 ASCII 字符;
+    bool common(char c);    // 除不可见字符和英文双引号以外 ASCII 字符
 }
 template <int size, NAME_TYPE T>
 class Name : public std::array<char, size> // 未测试
@@ -43,11 +43,11 @@ public:
         bool fg = 1;
         for (int i = 0; i < s.length(); i++)
         {
-            if (T == NAME::NUM_LETTER)
+            if (T == NAME_TYPE::NUM_LETTER)
                 fg &= NAME::numLetter(s[i]);
-            if (T == NAME::VISIBLE)
+            if (T == NAME_TYPE::VISIBLE)
                 fg &= NAME::visible(s[i]);
-            if (T == NAME::COMMON)
+            if (T == NAME_TYPE::COMMON)
                 fg &= NAME::common(s[i]);
         }
         return fg;

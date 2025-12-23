@@ -5,7 +5,7 @@ template <class T>
 class Stack // 未测试
 {
 protected:
-    const std::string filename;
+    std::string filename;
     T topElement;
     int n;           // 栈中元素数量
     int fileSize;    // 当前数据文件能容纳元素数量
@@ -15,7 +15,7 @@ protected:
     }
     int topIndex() // 栈顶索引
     {
-        return Data()->frontIndex + (n - 1) * sizeof(T);
+        return Data()->frontIndex() + (n - 1) * sizeof(T);
     }
 
 public:

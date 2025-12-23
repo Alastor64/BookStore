@@ -16,13 +16,30 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
-typedef Name<64, NAME::VISIBLE> str;
+#include "UserManager.hpp"
+typedef Name<64, NAME_TYPE::VISIBLE> str;
 std::vector<int> ans;
 str c;
+void sol2();
 int main()
 {
     Init();
-    Name<20, NAME::COMMON> SS = std::string("ababab");
+    Name<20, NAME_TYPE::COMMON> SS = std::string("ababab");
+    UserManager::mapID();
+    std::string tmp;
+    std::vector<std::string> V;
+    V.clear();
+    for (int i = 0; i < 4; i++)
+    {
+        std::cin >> tmp;
+        V.push_back(tmp);
+    }
+    std::cout << UserManager::userAdd(V) << std::endl;
+
+    return 0;
+}
+void sol2()
+{
     Map<str> mp("DATA");
     int n, x;
     scanf("%d", &n);
@@ -61,7 +78,6 @@ int main()
             printf("\n");
         }
     }
-    return 0;
 }
 // Map<int> mp("mapii");
 // std::vector<int> kk;

@@ -1,4 +1,5 @@
 #include "Initializer.hpp"
+#include "UserManager.hpp"
 #include <filesystem>
 namespace FS = std::filesystem;
 void Init()
