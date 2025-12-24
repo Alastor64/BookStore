@@ -34,4 +34,14 @@ public:
                     Ans.push_back(this->tmp.at(j).second);
         }
     }
+    int show(const K &Key) // 返回键值为Key的最大index，不存在返回END
+    {
+        if (this->heads.empty())
+            return END_INT;
+        int j = this->locate(pKi(Key, INT32_MAX)).second;
+        if (j == END_INT)
+            return END_INT;
+        else
+            return this->tmp.at(j).second;
+    }
 };

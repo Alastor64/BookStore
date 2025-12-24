@@ -25,3 +25,9 @@ Stack<std::pair<int, PRIVILEGE>> &UserManager::logedUsers()
     static Stack<std::pair<int, PRIVILEGE>> tmp("logedUsers");
     return tmp;
 }
+
+Stack<int> &UserManager::selectedBooks()
+{
+    static Stack<int> tmp("slectedBooks");
+    return tmp;
+}

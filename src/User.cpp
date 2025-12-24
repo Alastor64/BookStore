@@ -1,4 +1,8 @@
 #include "User.hpp"
+User::User()
+{
+    logedTimes = 0;
+}
 User::User(int _THIS) : Base(_THIS) {}
 bool isPRIVILEGE(const std::string &s)
 {

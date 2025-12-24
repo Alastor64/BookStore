@@ -24,7 +24,9 @@ void sol2();
 int main()
 {
     Init();
-    Name<20, NAME_TYPE::COMMON> SS = std::string("ababab");
+    printf("%d\n", sizeof(User));
+    Name<20, NAME_TYPE::COMMON>
+        SS = std::string("ababab");
     UserManager::mapID();
     std::string tmp;
     std::vector<std::string> V;

@@ -51,11 +51,11 @@ public:
             return;
         n--;
         Data()->Write_info(n, 0);
-        Data()->Read(topElement, topIndex());
+        Data()->Read(&topElement, topIndex());
     }
-    void update() // 空栈“不”是未定义行为
+    void update() // 空栈是未定义行为
     {
-        Data()->Update(&topElement, Data()->backIndex - sizeof(T));
+        Data()->Update(&topElement, Data()->frontIndex() + (n - 1) * sizeof(T));
     }
     bool empty()
     {

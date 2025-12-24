@@ -19,6 +19,7 @@ public:
     Name<30, NAME_TYPE::NUM_LETTER> password;
     Name<30, NAME_TYPE::VISIBLE> name;
     PRIVILEGE privilege;
-    User() {}
+    int logedTimes;
+    User();
     User(int _THIS);
 };
