@@ -131,12 +131,12 @@ int IO_base::Write(const void *t, const int num)
     return R;
 }
 
-void IO_base::Update(void *t, const int index)
+void IO_base::Update(const void *t, const int index)
 {
     Update(t, index, 1);
 }
 
-void IO_base::Update(void *t, const int index, const int num)
+void IO_base::Update(const void *t, const int index, const int num)
 {
     assert(index < back && index >= info_len && "illegal index");
     file = fopen(file_name.c_str(), "rb+");

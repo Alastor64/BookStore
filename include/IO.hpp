@@ -26,8 +26,8 @@ public:
     int Peep(); // 返回下一个插入索引 未测试
     int Write(const void *t);
     int Write(const void *t, const int num); // WARNING 仅用于不使用Delete的类型
-    void Update(void *t, const int index);
-    void Update(void *t, const int index, const int num); // WARNING 仅用于不使用Delete的类型
+    void Update(const void *t, const int index);
+    void Update(const void *t, const int index, const int num); // WARNING 仅用于不使用Delete的类型
     void Read(void *t, const int index);
     void Delete(const int index);
     int frontIndex(); // 类存储起始索引
