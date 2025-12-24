@@ -30,15 +30,3 @@ int UserManager::userAdd(const std::vector<std::string> &S)
     mapID().insert(std::make_pair(u.ID, u.THIS));
     return 0;
 }
-
-Map<decltype(User::ID)> &UserManager::mapID()
-{
-    static Map<decltype(User::ID)> tmp("UsersSortedByID");
-    return tmp;
-}
-
-Stack<std::pair<int, PRIVILEGE>> &UserManager::logedUsers()
-{
-    static Stack<std::pair<int, PRIVILEGE>> tmp("logedUsers");
-    return tmp;
-}

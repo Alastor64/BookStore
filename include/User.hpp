@@ -12,10 +12,7 @@ bool isPRIVILEGE(const std::string &s);
 class User : public Base
 {
 protected:
-    IO_base *Data() override
-    {
-        return IO<User>::instance("Users");
-    }
+    IO_base *Data() override;
 
 public:
     Name<30, NAME_TYPE::NUM_LETTER> ID;
