@@ -1,8 +1,11 @@
 #include "Commander.hpp"
+#include <iostream>
 namespace Commander
 {
     std::string tmp1;
     std::vector<std::string> tmp2;
+    std::string tmpIn;
+    std::string tmpOut;
 }
 int Commander::scanfString(it &L, it &R, std::string &S, const it &end)
 {
@@ -21,6 +24,7 @@ int Commander::excute(const std::string &inPut, std::string &outPut)
     if (!Name<MAX_COMMAND_LENGTH, NAME_TYPE::COMMAND>::check(inPut))
         return -1;
     it L = inPut.begin(), R;
+    outPut.clear();
     if (scanfString(L, R, tmp1, inPut.end())) // 仅有空格
         return 0;
     tmp2.clear();
@@ -52,4 +56,21 @@ int Commander::excute(const std::string &inPut, std::string &outPut)
     if (tmp1 == "delete")
         return UserManager::Delete(tmp2);
     return -3;
+}
+
+int Commander::exit(const std::vector<std::string> &S)
+{
+    std::exit(0);
+}
+
+int Commander::receptionist()
+{
+    while (std::getline(std::cin, tmpIn))
+    {
+        if (excute(tmpIn, tmpOut))
+            std::cout << INVALID << std::endl;
+        else if (!tmpOut.empty())
+            std::cout << tmpOut << std::endl;
+    }
+    return 0;
 }

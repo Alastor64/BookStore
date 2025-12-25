@@ -15,6 +15,7 @@ void testmapID();
 int main()
 {
     Init();
+    Commander::receptionist();
     return 0;
 }
 void testmapID()
