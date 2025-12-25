@@ -10,10 +10,10 @@ bool isPRIVILEGE(const std::string &s)
         return 0;
     switch (s.at(0))
     {
-    case '0':
-    case '1':
-    case '3':
-    case '7':
+    case static_cast<int>(PRIVILEGE::GUEST):
+    case static_cast<int>(PRIVILEGE::VISITOR):
+    case static_cast<int>(PRIVILEGE::STARFF):
+    case static_cast<int>(PRIVILEGE::BOSS):
         break;
     default:
         return 0;

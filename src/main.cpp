@@ -1,14 +1,3 @@
-// #include "IO.hpp"
-// #include <iostream>
-// #include <string>
-// #include <filesystem>
-// #include <stdio.h>
-// #include "Initializer.hpp"
-// #include "Vector.hpp"
-// #include "Name.hpp"
-// #include "List.hpp"
-// #include "Map.hpp"
-// std::array<int, 5> kkk;
 #include "Initializer.hpp"
 #include "Map.hpp"
 #include "Name.hpp"
@@ -17,17 +6,25 @@
 #include <stdio.h>
 #include <vector>
 #include "UserManager.hpp"
+#include "Commander.hpp"
 typedef Name<64, NAME_TYPE::VISIBLE> str;
 std::vector<int> ans;
 str c;
 void sol2();
+void testmapID();
 int main()
 {
     Init();
-    printf("%d\n", sizeof(User));
+    return 0;
+}
+void testmapID()
+{
+    printf("%d\n", int(sizeof(User)));
     Name<20, NAME_TYPE::COMMON>
         SS = std::string("ababab");
     UserManager::mapID();
+    std::array<int, 20> a;
+    a.size();
     std::string tmp;
     std::vector<std::string> V;
     V.clear();
@@ -37,8 +34,6 @@ int main()
         V.push_back(tmp);
     }
     std::cout << UserManager::userAdd(V) << std::endl;
-
-    return 0;
 }
 void sol2()
 {

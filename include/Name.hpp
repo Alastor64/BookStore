@@ -2,17 +2,19 @@
 #include <array>
 #include <string>
 #include <math.h>
-enum NAME_TYPE
+enum class NAME_TYPE
 {
     NUM_LETTER, // 数字，字母，下划线
     VISIBLE,    // 除不可见字符以外 ASCII 字符
     COMMON,     // 除不可见字符和英文双引号以外 ASCII 字符
+    COMMAND,
 };
 namespace NAME
 {
     bool numLetter(char c); // 数字，字母，下划线;
     bool visible(char c);   // 除不可见字符以外 ASCII 字符;
     bool common(char c);    // 除不可见字符和英文双引号以外 ASCII 字符
+    bool command(char c);
 }
 template <int size, NAME_TYPE T>
 class Name : public std::array<char, size> // 未测试
@@ -49,6 +51,8 @@ public:
                 fg &= NAME::visible(s[i]);
             if (T == NAME_TYPE::COMMON)
                 fg &= NAME::common(s[i]);
+            if (T == NAME_TYPE::COMMAND)
+                fg &= NAME::command(s[i]);
         }
         return fg;
     }

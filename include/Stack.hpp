@@ -45,10 +45,13 @@ public:
         else
             Data()->Update(&tmp, topIndex());
     }
-    void pop() // 空栈会直接return
+    void clear()
     {
-        if (empty())
-            return;
+        n = 0;
+        Data()->Write_info(n, 0);
+    }
+    void pop() // 空栈是未定义行为
+    {
         n--;
         Data()->Write_info(n, 0);
         Data()->Read(&topElement, topIndex());
