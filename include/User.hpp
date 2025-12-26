@@ -20,6 +20,6 @@ public:
     Name<30, NAME_TYPE::VISIBLE> name;
     PRIVILEGE privilege;
     int logedTimes;
-    User() {}
+    User();
     User(int _THIS);
 };
