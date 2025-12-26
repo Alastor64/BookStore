@@ -16,4 +16,6 @@ namespace UserManager
     int Delete(const std::vector<std::string> &S);
     int getPrivilege(PRIVILEGE &P);
     int getIndex(int &Pndex);
+    int exit(const std::vector<std::string> &S);
+    int logedClear();
 }

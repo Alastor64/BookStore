@@ -2,6 +2,7 @@
 namespace UserManager
 {
     User u;
+    std::vector<std::string> tmp;
 }
 int UserManager::userAdd(const std::vector<std::string> &S)
 {
@@ -21,7 +22,7 @@ int UserManager::userAdd(const std::vector<std::string> &S)
         u.password = S.at(1);
     else
         return 3;
-    if (isPRIVILEGE(S.at(2)))
+    if (!isPRIVILEGE(S.at(2)))
         u.privilege = static_cast<PRIVILEGE>(S.at(2).at(0) - '0');
     else
         return 4;
@@ -87,6 +88,7 @@ int UserManager::su(const std::vector<std::string> &S, PRIVILEGE P)
         if (u.password != C)
             return 4;
     }
+    std::cout << u.ID.at(0) << " " << u.password.at(0) << " " << u.name.at(0) << "\n";
     logedUsers().push(std::make_pair(u.THIS, u.privilege));
     selectedBooks().push(END_INT);
     u.logedTimes++;
@@ -99,10 +101,13 @@ int UserManager::logOut(const std::vector<std::string> &S)
         return -1;
     if (logedUsers().empty())
         return 1;
+    // printf("u=\n");
     u = logedUsers().top().first;
+    // printf("aab\n");
     u.logedTimes--;
     u.update();
     logedUsers().pop();
+    selectedBooks().pop();
     return 0;
 }
 int UserManager::Delete(const std::vector<std::string> &S)
@@ -133,4 +138,19 @@ int UserManager::getIndex(int &Index)
         return 1;
     Index = logedUsers().top().first;
     return 0;
+}
+
+int UserManager::logedClear()
+{
+    tmp.clear();
+    while (!logOut(tmp))
+        ;
+    return 0;
+}
+int UserManager::exit(const std::vector<std::string> &S)
+{
+    if (!S.empty())
+        return -1;
+    logedClear();
+    std::exit(0);
 }

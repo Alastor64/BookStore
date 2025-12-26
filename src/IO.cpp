@@ -138,12 +138,14 @@ void IO_base::Update(const void *t, const int index)
 
 void IO_base::Update(const void *t, const int index, const int num)
 {
+    printf("%d*%d\n", sizeofT(), num);
     assert(index < back && index >= info_len && "illegal index");
     file = fopen(file_name.c_str(), "rb+");
     assert(file && ("update failed")[0]);
     fseek(file, index, SEEK_SET);
     fwrite(t, sizeofT(), num, file);
     fclose(file);
+    printf("zp\n");
     updateinfo();
 }
 

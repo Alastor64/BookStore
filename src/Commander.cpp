@@ -13,7 +13,7 @@ int Commander::scanfString(it &L, it &R, std::string &S, const it &end)
         L++;
     if (L == end)
         return 1;
-    R = ++L;
+    (R = L)++;
     while (R != end && *R != SPLIT_CHAR)
         R++;
     S.assign(L, R);
@@ -45,6 +45,7 @@ int Commander::excute(const std::string &inPut, std::string &outPut)
             return -2;
         return UserManager::su(tmp2, p);
     }
+    std::cout << tmp1 << "\n";
     if (tmp1 == "logout")
         return UserManager::logOut(tmp2);
     if (tmp1 == "register")
@@ -55,22 +56,22 @@ int Commander::excute(const std::string &inPut, std::string &outPut)
         return UserManager::userAdd(tmp2);
     if (tmp1 == "delete")
         return UserManager::Delete(tmp2);
+    if (tmp1 == "exit" || tmp1 == "quit")
+        return UserManager::exit(tmp2);
     return -3;
-}
-
-int Commander::exit(const std::vector<std::string> &S)
-{
-    std::exit(0);
 }
 
 int Commander::receptionist()
 {
     while (std::getline(std::cin, tmpIn))
     {
-        if (excute(tmpIn, tmpOut))
-            std::cout << INVALID << std::endl;
+        int E;
+        if (E = excute(tmpIn, tmpOut))
+            std::cout << INVALID << std::endl
+                      << E << std::endl;
         else if (!tmpOut.empty())
-            std::cout << tmpOut << std::endl;
+            std::cout
+                << tmpOut << std::endl;
     }
     return 0;
 }

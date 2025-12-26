@@ -1,6 +1,7 @@
 #pragma once
 #include "IO.hpp"
 #include "CONSTEXPRS.hpp"
+#include <iostream>
 class Base // 未测试
 {
 protected:
@@ -9,7 +10,7 @@ protected:
 public:
     int THIS;
     Base() {}
-    Base(int _THIS)
+    void assign(int _THIS)
     {
         THIS = _THIS;
         if (_THIS != END_INT)
@@ -22,7 +23,11 @@ public:
     }
     void update() // 用自己更新文件
     {
+        printf("za");
+        Data();
+        printf("%d\n", THIS);
         Data()->Update(this, THIS);
+        printf("zz\n");
     }
     void read() // 从文件读取自己
     {
