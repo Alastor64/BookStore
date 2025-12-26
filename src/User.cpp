@@ -1,12 +1,8 @@
 #include "User.hpp"
 #include <iostream>
-User::User()
+void User::clear()
 {
     logedTimes = 0;
-}
-User::User(int _THIS)
-{
-    this->assign(_THIS);
 }
 bool isPRIVILEGE(const std::string &s)
 {

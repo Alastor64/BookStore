@@ -23,7 +23,7 @@ public:
         bool fg = 1;
         for (int i = hd.first; fg && i < this->heads.size(); i++, j = 0)
         {
-            this->Data()->Read(&this->tmp, this->heads.at(i).index);
+            this->Data().Read(&this->tmp, this->heads.at(i).index);
             for (; j < this->heads.at(i).blockSize; j++)
                 if (this->tmp.at(j).first != Key)
                 {

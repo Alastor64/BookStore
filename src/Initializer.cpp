@@ -21,16 +21,16 @@ void Init()
         tmp.push_back(std::to_string(static_cast<int>(PRIVILEGE::BOSS)));
         tmp.push_back("Alastor");
         int _ = UserManager::userAdd(tmp);
-        std::cout << _ << "\n";
+        // std::cout << _ << "\n";
     }
     tmp.clear();
     tmp.push_back("root");
     tmp.push_back("sjtu");
     UserManager::su(tmp, PRIVILEGE::BOSS);
-    printf("oo\n");
+    // printf("oo\n");
 }
 
-IO_base *User::Data()
+IO<User, 0> &UserManager::users()
 {
     return IO<User>::instance("Users");
 }

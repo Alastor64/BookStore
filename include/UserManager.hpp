@@ -5,6 +5,7 @@
 #include "Map.hpp"
 namespace UserManager
 {
+    IO<User, 0> &users();
     Stack<std::pair<int, PRIVILEGE>> &logedUsers();
     Map<decltype(User::ID)> &mapID();
     Stack<int> &selectedBooks();

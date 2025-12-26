@@ -45,7 +45,7 @@ int Commander::excute(const std::string &inPut, std::string &outPut)
             return -2;
         return UserManager::su(tmp2, p);
     }
-    std::cout << tmp1 << "\n";
+    // std::cout << tmp1 << "\n";
     if (tmp1 == "logout")
         return UserManager::logOut(tmp2);
     if (tmp1 == "register")
@@ -67,8 +67,8 @@ int Commander::receptionist()
     {
         int E;
         if (E = excute(tmpIn, tmpOut))
-            std::cout << INVALID << std::endl
-                      << E << std::endl;
+            std::cout << INVALID << std::endl;
+        //   << E << std::endl;
         else if (!tmpOut.empty())
             std::cout
                 << tmpOut << std::endl;

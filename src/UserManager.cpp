@@ -8,7 +8,6 @@ int UserManager::userAdd(const std::vector<std::string> &S)
 {
     if (S.size() != 4)
         return -1;
-    u = User();
     if (u.ID.check(S.at(0)))
     {
         u.ID = S.at(0);
@@ -30,22 +29,23 @@ int UserManager::userAdd(const std::vector<std::string> &S)
         u.name = S.at(3);
     else
         return 5;
-    u.write();
-    mapID().insert(std::make_pair(u.ID, u.THIS));
+    u.clear();
+    mapID().insert(std::make_pair(u.ID, users().Write(&u)));
     return 0;
 }
 int UserManager::passwd(const std::vector<std::string> &S)
 {
     if (S.size() < 2 || S.size() > 3)
         return -1;
+    int index = END_INT;
     if (u.ID.check(S.at(0)))
     {
         u.ID = S.at(0);
-        u.THIS = mapID().show(u.ID);
-        if (u.THIS == END_INT)
+        index = mapID().show(u.ID);
+        if (index == END_INT)
             return 1;
         else
-            u.read();
+            users().Read(&u, index);
     }
     if (S.size() == 3)
     {
@@ -58,7 +58,7 @@ int UserManager::passwd(const std::vector<std::string> &S)
     if (!u.password.check(S.back()))
         return 4;
     u.password = S.back();
-    u.update();
+    users().Update(&u, index);
     return 0;
 }
 int UserManager::Register(std::vector<std::string> &S)
@@ -74,10 +74,10 @@ int UserManager::su(const std::vector<std::string> &S, PRIVILEGE P)
         return -1;
     if (!u.ID.check(S.at(0)))
         return 1;
-    u.THIS = mapID().show(S.at(0));
-    if (u.THIS == END_INT)
+    int index = mapID().show(S.at(0));
+    if (index == END_INT)
         return 2;
-    u.read();
+    users().Read(&u, index);
     if (u.privilege >= P || S.size() == 2)
     {
         if (S.size() != 2)
@@ -88,11 +88,11 @@ int UserManager::su(const std::vector<std::string> &S, PRIVILEGE P)
         if (u.password != C)
             return 4;
     }
-    std::cout << u.ID.at(0) << " " << u.password.at(0) << " " << u.name.at(0) << "\n";
-    logedUsers().push(std::make_pair(u.THIS, u.privilege));
+    // std::cout << u.ID.at(0) << " " << u.password.at(0) << " " << u.name.at(0) << "\n";
+    logedUsers().push(std::make_pair(index, u.privilege));
     selectedBooks().push(END_INT);
     u.logedTimes++;
-    u.update();
+    users().Update(&u, index);
     return 0;
 }
 int UserManager::logOut(const std::vector<std::string> &S)
@@ -102,10 +102,11 @@ int UserManager::logOut(const std::vector<std::string> &S)
     if (logedUsers().empty())
         return 1;
     // printf("u=\n");
-    u = logedUsers().top().first;
+    int index = logedUsers().top().first;
+    users().Read(&u, index);
     // printf("aab\n");
     u.logedTimes--;
-    u.update();
+    users().Update(&u, index);
     logedUsers().pop();
     selectedBooks().pop();
     return 0;
@@ -116,13 +117,14 @@ int UserManager::Delete(const std::vector<std::string> &S)
         return -1;
     if (!u.ID.check(S.at(0)))
         return 1;
-    u.THIS = mapID().show(S.at(0));
-    if (u.THIS == END_INT)
+    int index = mapID().show(S.at(0));
+    if (index == END_INT)
         return 2;
-    u.read();
+    users().Read(&u, index);
     if (u.logedTimes)
         return 3;
-    u.Delete();
+    users().Delete(index);
+    mapID().eraze(std::make_pair(u.ID, index));
     return 0;
 }
 int UserManager::getPrivilege(PRIVILEGE &P)

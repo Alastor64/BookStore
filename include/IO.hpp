@@ -45,10 +45,10 @@ protected:
 public:
     IO() : IO_base(EXTRA_INFO) {}
     IO(const std::string &filename, bool NEED_INIT = 0) : IO_base(filename, EXTRA_INFO, NEED_INIT) {}
-    static IO<T, EXTRA_INFO> *instance(const std::string &className)
+    static IO<T, EXTRA_INFO> &instance(const std::string &className)
     {
         static IO<T, EXTRA_INFO> Instance(className + ".data", 1); // WARNING!
-        return &Instance;
+        return Instance;
     }
 };
 
