@@ -34,7 +34,7 @@ void testmapID()
         std::cin >> tmp;
         V.push_back(tmp);
     }
-    std::cout << UserManager::userAdd(V) << std::endl;
+    std::cout << UserManager::userAdd(V, PRIVILEGE::BIG_BROTHER) << std::endl;
 }
 void sol2()
 {

@@ -4,7 +4,7 @@ namespace UserManager
     User u;
     std::vector<std::string> tmp;
 }
-int UserManager::userAdd(const std::vector<std::string> &S)
+int UserManager::userAdd(const std::vector<std::string> &S, PRIVILEGE p)
 {
     if (S.size() != 4)
         return -1;
@@ -25,10 +25,12 @@ int UserManager::userAdd(const std::vector<std::string> &S)
         u.privilege = static_cast<PRIVILEGE>(S.at(2).at(0) - '0');
     else
         return 4;
+    if (u.privilege >= p)
+        return 5;
     if (u.name.check(S.at(3)))
         u.name = S.at(3);
     else
-        return 5;
+        return 6;
     u.clear();
     mapID().insert(std::make_pair(u.ID, users().Write(&u)));
     return 0;
@@ -66,7 +68,7 @@ int UserManager::Register(std::vector<std::string> &S)
     if (S.size() != 3)
         return -1;
     S.insert(S.begin() + 2, "1");
-    return userAdd(S);
+    return userAdd(S, PRIVILEGE::BIG_BROTHER);
 }
 int UserManager::su(const std::vector<std::string> &S, PRIVILEGE P)
 {
@@ -127,12 +129,11 @@ int UserManager::Delete(const std::vector<std::string> &S)
     mapID().eraze(std::make_pair(u.ID, index));
     return 0;
 }
-int UserManager::getPrivilege(PRIVILEGE &P)
+PRIVILEGE UserManager::getPrivilege()
 {
     if (logedUsers().empty())
-        return 1;
-    P = logedUsers().top().second;
-    return 0;
+        return PRIVILEGE::VISITOR;
+    return logedUsers().top().second;
 }
 int UserManager::getIndex(int &Index)
 {
@@ -141,7 +142,12 @@ int UserManager::getIndex(int &Index)
     Index = logedUsers().top().first;
     return 0;
 }
-
+int UserManager::getBook()
+{
+    if (selectedBooks().empty())
+        return END_INT;
+    return selectedBooks().top();
+}
 int UserManager::logedClear()
 {
     tmp.clear();

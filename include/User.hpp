@@ -7,6 +7,7 @@ enum class PRIVILEGE
     GUEST = 1,
     STARFF = 3,
     BOSS = 7,
+    BIG_BROTHER = 999,
 };
 bool isPRIVILEGE(const std::string &s);
 class User : public Base

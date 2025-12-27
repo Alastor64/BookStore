@@ -39,23 +39,37 @@ int Commander::excute(const std::string &inPut, std::string &outPut)
         }
     }
     if (tmp1 == "su")
-    {
-        PRIVILEGE p;
-        if (UserManager::getPrivilege(p))
-            return -2;
-        return UserManager::su(tmp2, p);
-    }
-    // std::cout << tmp1 << "\n";
+        return UserManager::su(tmp2, UserManager::getPrivilege());
     if (tmp1 == "logout")
-        return UserManager::logOut(tmp2);
+    {
+        if (UserManager::getPrivilege() >= PRIVILEGE::GUEST)
+            return UserManager::logOut(tmp2);
+        else
+            return -4;
+    }
     if (tmp1 == "register")
         return UserManager::Register(tmp2);
     if (tmp1 == "passwd")
-        return UserManager::passwd(tmp2);
+    {
+        if (UserManager::getPrivilege() >= PRIVILEGE::GUEST)
+            return UserManager::passwd(tmp2);
+        else
+            return -5;
+    }
     if (tmp1 == "useradd")
-        return UserManager::userAdd(tmp2);
+    {
+        if (UserManager::getPrivilege() >= PRIVILEGE::STARFF)
+            return UserManager::userAdd(tmp2, UserManager::getPrivilege());
+        else
+            return -6;
+    }
     if (tmp1 == "delete")
-        return UserManager::Delete(tmp2);
+    {
+        if (UserManager::getPrivilege() >= PRIVILEGE::BOSS)
+            return UserManager::Delete(tmp2);
+        else
+            return -7;
+    }
     if (tmp1 == "exit" || tmp1 == "quit")
         return UserManager::exit(tmp2);
     return -3;
