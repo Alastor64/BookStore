@@ -81,8 +81,8 @@ int Commander::receptionist()
     {
         int E;
         if (E = excute(tmpIn, tmpOut))
-            std::cout << INVALID << std::endl;
-        //   << E << std::endl;
+            std::cout << INVALID << std::endl ///;
+                      << E << std::endl;
         else if (!tmpOut.empty())
             std::cout
                 << tmpOut << std::endl;

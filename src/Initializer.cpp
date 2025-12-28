@@ -24,10 +24,10 @@ void Init()
         int _ = UserManager::userAdd(tmp, PRIVILEGE::BIG_BROTHER);
         // std::cout << _ << "\n";
     }
-    tmp.clear();
-    tmp.push_back("root");
-    tmp.push_back("sjtu");
-    UserManager::su(tmp, PRIVILEGE::BIG_BROTHER);
+    // tmp.clear();
+    // tmp.push_back("root");
+    // tmp.push_back("sjtu");
+    // UserManager::su(tmp, PRIVILEGE::BIG_BROTHER);
     // printf("oo\n");
 }
 

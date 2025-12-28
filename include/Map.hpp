@@ -42,7 +42,9 @@ public:
         int j = this->locate(pKi(Key, INT32_MAX)).second;
         if (j == END_INT)
             return END_INT;
-        else
+        else if (this->tmp.at(j).first == Key)
             return this->tmp.at(j).second;
+        else
+            return END_INT;
     }
 };
