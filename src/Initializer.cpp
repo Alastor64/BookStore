@@ -3,6 +3,7 @@
 #include "User.hpp"
 #include "Commander.hpp"
 #include "BookManager.hpp"
+#include "BigBrother.hpp"
 #include <filesystem>
 #include <iostream>
 #include <iomanip>
@@ -79,5 +80,11 @@ Map<decltype(Book::keywords)> &BookManager::mapKeywords()
 {
     // printf("fuck!\n"); // #
     static Map<decltype(Book::keywords)> tmp("BooksSortedByKeywords");
+    return tmp;
+}
+
+Stack<Finance> &BigBrother::cashLog()
+{
+    static Stack<Finance> tmp("cashLog");
     return tmp;
 }

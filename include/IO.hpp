@@ -29,6 +29,7 @@ public:
     void Update(const void *t, const int index);
     void Update(const void *t, const int index, const int num); // WARNING 仅用于不使用Delete的类型
     void Read(void *t, const int index);
+    void Read(void *t, const int index, const int num);
     void Delete(const int index);
     int frontIndex(); // 类存储起始索引
 };

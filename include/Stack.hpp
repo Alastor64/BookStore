@@ -1,6 +1,7 @@
 #pragma once
 #include "IO.hpp"
 #include <string>
+#include <vector>
 template <class T>
 class Stack // 未测试
 {
@@ -27,6 +28,19 @@ public:
     T &top() // 栈顶引用 空栈是未定义行为
     {
         return topElement;
+    }
+    int top(int m, std::vector<T> &an) // T()必须存在
+    {
+        if (m > n)
+            return -1;
+        if (!m)
+        {
+            an.clear();
+            return 0;
+        }
+        an.assign(m, T());
+        Data().Read(&an.front(), topIndex() - (m - 1) * sizeof(T), m);
+        return 0;
     }
     void push(const T &tmp) // 会先更新原栈顶，在压入、更新新栈顶
     {

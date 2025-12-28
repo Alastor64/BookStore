@@ -151,12 +151,16 @@ void IO_base::Update(const void *t, const int index, const int num)
 
 void IO_base::Read(void *t, const int index)
 {
+    Read(t, index, 1);
+}
+void IO_base::Read(void *t, const int index, const int num)
+{
     // printf("index:%d\n", index);#
     assert(index < back /* && index >= info_len && "illegal index"[0]*/);
     file = fopen(file_name.c_str(), "rb+");
     assert(file && ("read failed")[0]);
     fseek(file, index, SEEK_SET);
-    fread(t, sizeofT(), 1, file);
+    fread(t, sizeofT(), num, file);
     fclose(file);
     updateinfo();
 }

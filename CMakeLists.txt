@@ -15,6 +15,7 @@ set(MY_SOURCES
     src/Commander.cpp
     src/Book.cpp
     src/BookManager.cpp
+    src/BigBrother.cpp
 )
 
 # set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
