@@ -1,5 +1,6 @@
 #include "Commander.hpp"
 #include "BookManager.hpp"
+#include "BigBrother.hpp"
 #include <iostream>
 namespace Commander
 {
@@ -84,13 +85,28 @@ int Commander::excute(const std::string &inPut)
     if (tmp1 == "exit" || tmp1 == "quit")
         return UserManager::exit(tmp2);
     if (tmp1 == "show")
-        if (UserManager::getPrivilege() >= PRIVILEGE::GUEST)
+    {
+        if (!tmp2.empty() && tmp2.front() == "finance")
+            return BigBrother::show_finance(tmp2);
+        else if (UserManager::getPrivilege() >= PRIVILEGE::GUEST)
             return BookManager::show(tmp2);
         else
             return -8;
+    }
     if (tmp1 == "buy")
         if (UserManager::getPrivilege() >= PRIVILEGE::GUEST)
-            return BookManager::buy(tmp2);
+        {
+            Finance Gain;
+            Gain.isCost = 0;
+            int _ = BookManager::buy(tmp2, Gain.cash);
+            if (_)
+                return _;
+            else
+            {
+                BigBrother::cashLog().push(Gain);
+                return 0;
+            }
+        }
         else
             return -9;
     if (tmp1 == "select")
@@ -103,10 +119,20 @@ int Commander::excute(const std::string &inPut)
             return BookManager::modify(tmp2);
         else
             return -11;
-    double Cost;
     if (tmp1 == "import")
         if (UserManager::getPrivilege() >= PRIVILEGE::STARFF)
-            return BookManager::import(tmp2, Cost);
+        {
+            Finance Cost;
+            Cost.isCost = 1;
+            int _ = BookManager::import(tmp2, Cost.cash);
+            if (_)
+                return _;
+            else
+            {
+                BigBrother::cashLog().push(Cost);
+                return 0;
+            }
+        }
         else
             return -12;
     return -3;

@@ -23,7 +23,7 @@ namespace BookManager
     int addK(int index);
     int delK(int index);
     int select(const std::vector<std::string> &S);
-    int buy(const std::vector<std::string> &S);
+    int buy(const std::vector<std::string> &S, double &Gain);
     int import(const std::vector<std::string> &S, double &cost);
     int modify(const std::vector<std::string> &S);
     int splitKeys(const std::string &S, int &which);
