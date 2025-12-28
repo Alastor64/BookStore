@@ -69,6 +69,10 @@ public:
         for (int i = 0; i < length; i++)
             printf("%c", this->at(i));
     }
+    bool empty()
+    {
+        return !length;
+    }
 };
 
 template <int size, NAME_TYPE T>
