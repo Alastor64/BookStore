@@ -90,6 +90,7 @@ int BookManager::buy(const std::vector<std::string> &S, double &Gain)
     tmp.quantity -= num;
     books().Update(&tmp, index);
     Gain = num * tmp.price;
+    std::cout << Gain << std::endl;
     return 0;
 }
 int BookManager::import(const std::vector<std::string> &S, double &cost)
