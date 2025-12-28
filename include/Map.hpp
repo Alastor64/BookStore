@@ -2,6 +2,7 @@
 #include "List.hpp"
 #include "CONSTEXPRS.hpp"
 #include <vector>
+#include <cstdint>
 template <class K>
 class Map : public List<std::pair<K, int>>
 {
