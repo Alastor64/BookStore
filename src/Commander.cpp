@@ -19,25 +19,36 @@ int Commander::scanfString(it &L, it &R, std::string &S, const it &end)
     S.assign(L, R);
     return 0;
 }
-int Commander::excute(const std::string &inPut, std::string &outPut)
+int Commander::interpreter(const std::string &S)
 {
-    if (!Name<MAX_COMMAND_LENGTH, NAME_TYPE::COMMAND>::check(inPut))
+    if (!Name<MAX_COMMAND_LENGTH, NAME_TYPE::COMMAND>::check(S))
         return -1;
-    it L = inPut.begin(), R;
-    outPut.clear();
-    if (scanfString(L, R, tmp1, inPut.end())) // 仅有空格
+    it L = S.begin(), R;
+    if (scanfString(L, R, tmp1, S.end())) // 仅有空格
+    {
+        tmp1.clear();
         return 0;
+    }
     tmp2.clear();
     while (1)
     {
         L = R;
         tmp2.push_back("");
-        if (scanfString(L, R, tmp2.back(), inPut.end()))
+        if (scanfString(L, R, tmp2.back(), S.end()))
         {
             tmp2.pop_back();
             break;
         }
     }
+    return 0;
+}
+int Commander::excute(const std::string &inPut, std::string &outPut)
+{
+    if (interpreter(inPut))
+        return -1;
+    outPut.clear();
+    if (tmp1.empty())
+        return 0;
     if (tmp1 == "su")
         return UserManager::su(tmp2, UserManager::getPrivilege());
     if (tmp1 == "logout")

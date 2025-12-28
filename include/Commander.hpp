@@ -6,4 +6,5 @@ namespace Commander
     int excute(const std::string &inPut, std::string &outPut);
     int scanfString(it &L, it &R, std::string &S, const it &end);
     int receptionist();
+    int interpreter(const std::string &S);
 }
