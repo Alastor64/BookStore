@@ -5,9 +5,11 @@
 #include "BookManager.hpp"
 #include <filesystem>
 #include <iostream>
+#include <iomanip>
 namespace FS = std::filesystem;
 void Init()
 {
+    std::cout << std::fixed << std::setprecision(2);
     if (!FS::exists("data"))
         FS::create_directory("data");
     UserManager::logedClear();
@@ -55,8 +57,7 @@ Stack<int> &UserManager::selectedBooks()
 }
 IO<Book> &BookManager::books()
 {
-    static IO<Book> tmp("Books");
-    return tmp;
+    return IO<Book>::instance("Books");
 }
 
 Map<decltype(Book::ISBN)> &BookManager::mapISBN()
@@ -76,6 +77,7 @@ Map<decltype(Book::name)> &BookManager::mapName()
 }
 Map<decltype(Book::keywords)> &BookManager::mapKeywords()
 {
+    // printf("fuck!\n"); // #
     static Map<decltype(Book::keywords)> tmp("BooksSortedByKeywords");
     return tmp;
 }

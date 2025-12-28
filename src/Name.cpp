@@ -66,6 +66,10 @@ int NAME::to_real(const std::string &S, double &an)
         MI = (MI << 1) + (MI << 3);
         SU += S.at(i) & 15;
     }
+    if (MI == 1)
+        return 4;
+    if (!MI)
+        MI = 1;
     if (_)
         an = -SU / double(MI);
     else
@@ -83,10 +87,12 @@ int NAME::is_positive_real(const std::string &S)
                 return 0;
             else
                 fg = 1;
-        else if (S.at(i) < '0' || S.at(i) > 9)
+        else if (S.at(i) < '0' || S.at(i) > '9')
             return 0;
         else if (S.at(i) > '0')
             pos = 1;
     }
+    if (S.back() == '.')
+        return 0;
     return pos;
 }

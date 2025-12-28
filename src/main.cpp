@@ -7,6 +7,7 @@
 #include <vector>
 #include "UserManager.hpp"
 #include "Commander.hpp"
+#include <iomanip>
 typedef Name<64, NAME_TYPE::VISIBLE> str;
 std::vector<int> ans;
 str c;

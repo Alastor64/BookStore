@@ -24,19 +24,22 @@ int BookManager::split(const decltype(Book::keywords) &S)
         }
         else
         {
-            if (!keywords.back().length)
+            if (keywords.back().empty())
                 return 1;
             keywords.push_back(std::string(""));
         }
     }
-    if (!keywords.back().length)
+    if (keywords.back().empty())
         return 1;
+    // std::cout << keywords.size() << std::endl; // #
     return 0;
 }
 int BookManager::addK(int index)
 {
+    // std::cout << keywords.size() << std::endl; // #
     for (int i = 0; i < keywords.size(); i++)
     {
+        // std::cout << "fuck\n"; // #
         mapKeywords().insert(std::make_pair(keywords.at(i), index));
     }
     return 0;
@@ -116,8 +119,7 @@ int BookManager::insert(const Book &B, int Index) // 确保keywords已经更新
     if (!B.author.empty())
         mapAuthor().insert(std::make_pair(B.author, Index));
     if (!B.keywords.empty())
-        for (int i = 0; i < keywords.size(); i++)
-            mapKeywords().insert(std::make_pair(keywords.at(i), Index));
+        addK(Index);
     return 0;
 }
 int BookManager::eraze(const Book &B, int Index) // 确保keywords已经更新
@@ -128,8 +130,7 @@ int BookManager::eraze(const Book &B, int Index) // 确保keywords已经更新
     if (!B.author.empty())
         mapAuthor().eraze(std::make_pair(B.author, Index));
     if (!B.keywords.empty())
-        for (int i = 0; i < keywords.size(); i++)
-            mapKeywords().eraze(std::make_pair(keywords.at(i), Index));
+        delK(Index);
     return 0;
 }
 int BookManager::splitKeys(const std::string &S, int &which)
@@ -189,32 +190,38 @@ int BookManager::modify(const std::vector<std::string> &S)
             return 3;
         BOOK_INFO info = static_cast<BOOK_INFO>(which);
         if (info == BOOK_INFO::ISBN)
-            if (tmp.ISBN.check(value))
+            if (!tmp.ISBN.check(value))
                 return 4;
             else
+            {
                 tmp.ISBN = value;
+                if (mapISBN().show(tmp.ISBN) != END_INT)
+                    return 5;
+            }
         if (info == BOOK_INFO::NAME)
-            if (tmp.name.check(value))
+            if (!tmp.name.check(value))
                 return 4;
             else
                 tmp.name = value;
         if (info == BOOK_INFO::AUTHOR)
-            if (tmp.author.check(value))
+            if (!tmp.author.check(value))
                 return 4;
             else
                 tmp.author = value;
         if (info == BOOK_INFO::KEYWORD)
-            if (tmp.keywords.check(value))
+            if (!tmp.keywords.check(value))
                 return 4;
             else
                 tmp.keywords = value;
         if (info == BOOK_INFO::PRICE)
             if (NAME::to_real(value, tmp.price))
                 return 4;
+        flag[which] = 1;
     }
-    if (split(tmp.keywords))
-        return 5;
+    if (flag[static_cast<int>(BOOK_INFO::KEYWORD)] && split(tmp.keywords))
+        return 6;
     insert(tmp, index);
+    split(tmp2.keywords);
     eraze(tmp2, index);
     books().Update(&tmp, index);
     return 0;
@@ -228,8 +235,13 @@ int BookManager::show(const std::vector<std::string> &S)
     else
     {
         int which;
+        for (int i = 0; i < BOOK_KEYS.max_size(); i++)
+            flag[i] = 0;
         if (splitKeys(S.at(0), which))
+        {
+            // printf(":%d\n", splitKeys(S.at(0), which)); // #
             return 1;
+        }
         BOOK_INFO info = static_cast<BOOK_INFO>(which);
         if (info == BOOK_INFO::PRICE)
             return 2;
@@ -240,12 +252,12 @@ int BookManager::show(const std::vector<std::string> &S)
                 return 3;
         if (info == BOOK_INFO::NAME)
             if (tmp.name.check(value))
-                mapISBN().show(value, tmpIndex);
+                mapName().show(value, tmpIndex);
             else
                 return 3;
         if (info == BOOK_INFO::AUTHOR)
             if (tmp.author.check(value))
-                mapISBN().show(value, tmpIndex);
+                mapAuthor().show(value, tmpIndex);
             else
                 return 3;
         if (info == BOOK_INFO::KEYWORD)
@@ -279,7 +291,8 @@ int BookManager::show(const std::vector<std::string> &S)
         std::cout << "\t";
         tmp.keywords.print();
         std::cout << "\t";
-        std::cout << std::setprecision(2) << tmp.price;
+        // std::cout << std::setprecision(2);
+        std::cout << tmp.price;
         std::cout << "\t";
         std::cout << tmp.quantity;
         std::cout << std::endl;

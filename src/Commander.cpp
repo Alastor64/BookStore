@@ -93,7 +93,7 @@ int Commander::excute(const std::string &inPut)
             return BookManager::buy(tmp2);
         else
             return -9;
-    if (tmp1 == "slect")
+    if (tmp1 == "select")
         if (UserManager::getPrivilege() >= PRIVILEGE::STARFF)
             return BookManager::select(tmp2);
         else
