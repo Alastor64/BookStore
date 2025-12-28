@@ -1,11 +1,12 @@
 #include "Commander.hpp"
+#include "BookManager.hpp"
 #include <iostream>
 namespace Commander
 {
     std::string tmp1;
     std::vector<std::string> tmp2;
     std::string tmpIn;
-    std::string tmpOut;
+    // std::vector<std::string> tmpOut;
 }
 int Commander::scanfString(it &L, it &R, std::string &S, const it &end)
 {
@@ -42,11 +43,10 @@ int Commander::interpreter(const std::string &S)
     }
     return 0;
 }
-int Commander::excute(const std::string &inPut, std::string &outPut)
+int Commander::excute(const std::string &inPut)
 {
     if (interpreter(inPut))
         return -1;
-    outPut.clear();
     if (tmp1.empty())
         return 0;
     if (tmp1 == "su")
@@ -63,7 +63,7 @@ int Commander::excute(const std::string &inPut, std::string &outPut)
     if (tmp1 == "passwd")
     {
         if (UserManager::getPrivilege() >= PRIVILEGE::GUEST)
-            return UserManager::passwd(tmp2);
+            return UserManager::passwd(tmp2, UserManager::getPrivilege());
         else
             return -5;
     }
@@ -83,6 +83,32 @@ int Commander::excute(const std::string &inPut, std::string &outPut)
     }
     if (tmp1 == "exit" || tmp1 == "quit")
         return UserManager::exit(tmp2);
+    if (tmp1 == "show")
+        if (UserManager::getPrivilege() >= PRIVILEGE::GUEST)
+            return BookManager::show(tmp2);
+        else
+            return -8;
+    if (tmp1 == "buy")
+        if (UserManager::getPrivilege() >= PRIVILEGE::GUEST)
+            return BookManager::buy(tmp2);
+        else
+            return -9;
+    if (tmp1 == "slect")
+        if (UserManager::getPrivilege() >= PRIVILEGE::STARFF)
+            return BookManager::select(tmp2);
+        else
+            return -10;
+    if (tmp1 == "modify")
+        if (UserManager::getPrivilege() >= PRIVILEGE::STARFF)
+            return BookManager::modify(tmp2);
+        else
+            return -11;
+    double Cost;
+    if (tmp1 == "import")
+        if (UserManager::getPrivilege() >= PRIVILEGE::STARFF)
+            return BookManager::import(tmp2, Cost);
+        else
+            return -12;
     return -3;
 }
 
@@ -91,12 +117,12 @@ int Commander::receptionist()
     while (std::getline(std::cin, tmpIn))
     {
         int E;
-        if (E = excute(tmpIn, tmpOut))
+        if (E = excute(tmpIn))
             std::cout << INVALID << std::endl;
         //   << E << std::endl;
-        else if (!tmpOut.empty())
-            std::cout
-                << tmpOut << std::endl;
+        // else
+        //     for (int i = 0; i < tmpOut.size(); i++)
+        //         std::cout << tmpOut.at(i) << std::endl;
     }
     return 0;
 }

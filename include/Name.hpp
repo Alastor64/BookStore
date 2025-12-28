@@ -3,6 +3,7 @@
 #include <string>
 #include <math.h>
 #include <string>
+#include <iostream>
 enum class NAME_TYPE
 {
     NUM_LETTER, // 数字，字母，下划线
@@ -64,12 +65,13 @@ public:
     {
         this->at(length++) = c;
     }
-    void print()
+    void print() const
     {
         for (int i = 0; i < length; i++)
-            printf("%c", this->at(i));
+            // printf("%c", this->at(i));
+            std::cout << this->at(i);
     }
-    bool empty()
+    bool empty() const
     {
         return !length;
     }

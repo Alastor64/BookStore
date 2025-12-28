@@ -29,4 +29,6 @@ namespace BookManager
     int splitKeys(const std::string &S, int &which);
     int insert(const Book &B, int Index);
     int eraze(const Book &B, int Index);
+    int show(const std::vector<std::string> &S);
+    int sortByISBN();
 }

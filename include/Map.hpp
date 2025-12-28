@@ -12,6 +12,16 @@ private:
 
 public:
     Map(const std::string &FN) : List<pKi>(FN) {}
+    void load(std::vector<int> &Ans)
+    {
+        Ans.clear();
+        for (int i = 0; i < this->heads.size(); i++)
+        {
+            this->Data().Read(&this->tmp, this->heads.at(i).index);
+            for (int j = 0; j < this->heads.at(i).blockSize; j++)
+                Ans.push_back(this->tmp.at(j).second);
+        }
+    }
     void show(const K &Key, std::vector<int> &Ans) // 将Ans清空，然后将键值为Key的value存入Ans
     {
         Ans.clear();

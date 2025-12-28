@@ -35,7 +35,7 @@ int UserManager::userAdd(const std::vector<std::string> &S, PRIVILEGE p)
     mapID().insert(std::make_pair(u.ID, users().Write(&u)));
     return 0;
 }
-int UserManager::passwd(const std::vector<std::string> &S)
+int UserManager::passwd(const std::vector<std::string> &S, PRIVILEGE p)
 {
     if (S.size() < 2 || S.size() > 3)
         return -1;
@@ -57,8 +57,10 @@ int UserManager::passwd(const std::vector<std::string> &S)
         if (u.password != C)
             return 3;
     }
-    if (!u.password.check(S.back()))
+    else if (p < PRIVILEGE::BOSS)
         return 4;
+    if (!u.password.check(S.back()))
+        return 5;
     u.password = S.back();
     users().Update(&u, index);
     return 0;

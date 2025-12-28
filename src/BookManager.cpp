@@ -1,4 +1,7 @@
 #include "BookManager.hpp"
+#include <iostream>
+#include <iomanip>
+#include <algorithm>
 namespace BookManager
 {
     Book tmp, tmp2;
@@ -6,6 +9,8 @@ namespace BookManager
     std::string key;
     std::string value;
     bool flag[BOOK_KEYS.max_size()];
+    std::vector<int> tmpIndex;
+    std::vector<std::pair<decltype(Book::ISBN), int>> tmpSort;
 }
 int BookManager::split(const decltype(Book::keywords) &S)
 {
@@ -103,7 +108,7 @@ int BookManager::import(const std::vector<std::string> &S, double &cost)
     NAME::to_real(S.at(1), cost);
     return 0;
 }
-int BookManager::insert(Book &B, int Index) // 确保keywords已经更新
+int BookManager::insert(const Book &B, int Index) // 确保keywords已经更新
 {
     mapISBN().insert(std::make_pair(B.ISBN, Index));
     if (!B.name.empty())
@@ -115,7 +120,7 @@ int BookManager::insert(Book &B, int Index) // 确保keywords已经更新
             mapKeywords().insert(std::make_pair(keywords.at(i), Index));
     return 0;
 }
-int BookManager::eraze(Book &B, int Index) // 确保keywords已经更新
+int BookManager::eraze(const Book &B, int Index) // 确保keywords已经更新
 {
     mapISBN().eraze(std::make_pair(B.ISBN, Index));
     if (!B.name.empty())
@@ -212,5 +217,85 @@ int BookManager::modify(const std::vector<std::string> &S)
     insert(tmp, index);
     eraze(tmp2, index);
     books().Update(&tmp, index);
+    return 0;
+}
+int BookManager::show(const std::vector<std::string> &S)
+{
+    if (S.size() > 1)
+        return -1;
+    if (S.empty())
+        mapISBN().load(tmpIndex);
+    else
+    {
+        int which;
+        if (splitKeys(S.at(0), which))
+            return 1;
+        BOOK_INFO info = static_cast<BOOK_INFO>(which);
+        if (info == BOOK_INFO::PRICE)
+            return 2;
+        if (info == BOOK_INFO::ISBN)
+            if (tmp.ISBN.check(value))
+                mapISBN().show(value, tmpIndex);
+            else
+                return 3;
+        if (info == BOOK_INFO::NAME)
+            if (tmp.name.check(value))
+                mapISBN().show(value, tmpIndex);
+            else
+                return 3;
+        if (info == BOOK_INFO::AUTHOR)
+            if (tmp.author.check(value))
+                mapISBN().show(value, tmpIndex);
+            else
+                return 3;
+        if (info == BOOK_INFO::KEYWORD)
+            if (tmp.keywords.check(value))
+            {
+                tmp.keywords = value;
+                if (split(tmp.keywords))
+                    return 4;
+                if (keywords.size() != 1)
+                    return 5;
+                mapKeywords().show(keywords.at(0), tmpIndex);
+            }
+            else
+                return 3;
+    }
+    if (tmpIndex.empty())
+    {
+        std::cout << std::endl;
+        return 0;
+    }
+    sortByISBN();
+    for (int i = 0; i < tmpIndex.size(); i++)
+    {
+        int index = tmpIndex.at(i);
+        books().Read(&tmp, index);
+        tmp.ISBN.print();
+        std::cout << "\t";
+        tmp.name.print();
+        std::cout << "\t";
+        tmp.author.print();
+        std::cout << "\t";
+        tmp.keywords.print();
+        std::cout << "\t";
+        std::cout << std::setprecision(2) << tmp.price;
+        std::cout << "\t";
+        std::cout << tmp.quantity;
+        std::cout << std::endl;
+    }
+    return 0;
+}
+int BookManager::sortByISBN()
+{
+    tmpSort.clear();
+    for (int i = 0; i < tmpIndex.size(); i++)
+    {
+        books().Read(&tmp, tmpIndex.at(i));
+        tmpSort.push_back(std::make_pair(tmp.ISBN, tmpIndex.at(i)));
+    }
+    std::sort(tmpSort.begin(), tmpSort.end());
+    for (int i = 0; i < tmpIndex.size(); i++)
+        tmpIndex.at(i) = tmpSort.at(i).second;
     return 0;
 }
