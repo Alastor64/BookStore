@@ -278,6 +278,7 @@ int BookManager::show(const std::vector<std::string> &S)
                 tmp.keywords = value;
                 if (split(tmp.keywords))
                     return 4;
+                assert(!keywords.empty());
                 if (keywords.size() != 1)
                     return 5;
                 mapKeywords().show(keywords.at(0), tmpIndex);
