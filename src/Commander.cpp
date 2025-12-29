@@ -144,7 +144,7 @@ int Commander::excute(const std::string &inPut)
 
 int Commander::receptionist()
 {
-    bool DEBUG = 0;
+    bool DEBUG = 1;
     std::fstream Log;
     if (DEBUG)
         Log.open("log.out", std::ios::out);

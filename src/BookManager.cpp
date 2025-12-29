@@ -15,6 +15,8 @@ namespace BookManager
 int BookManager::split(const decltype(Book::keywords) &S)
 {
     keywords.clear();
+    if (S.empty())
+        return 0;
     keywords.push_back(std::string(""));
     for (int i = 0; i < S.length; i++)
     {
@@ -68,6 +70,8 @@ int BookManager::select(const std::vector<std::string> &S)
     {
         index = books().Write(&tmp);
         mapISBN().insert(std::make_pair(tmp.ISBN, index));
+        mapName().insert(std::make_pair(tmp.name, index));
+        mapAuthor().insert(std::make_pair(tmp.author, index));
     }
     UserManager::selectedBooks().top() = index;
     UserManager::selectedBooks().update();
@@ -120,23 +124,23 @@ int BookManager::import(const std::vector<std::string> &S, db &cost)
 int BookManager::insert(const Book &B, int Index) // 确保keywords已经更新
 {
     mapISBN().insert(std::make_pair(B.ISBN, Index));
-    if (!B.name.empty())
-        mapName().insert(std::make_pair(B.name, Index));
-    if (!B.author.empty())
-        mapAuthor().insert(std::make_pair(B.author, Index));
-    if (!B.keywords.empty())
-        addK(Index);
+    // if (!B.name.empty())
+    mapName().insert(std::make_pair(B.name, Index));
+    // if (!B.author.empty())
+    mapAuthor().insert(std::make_pair(B.author, Index));
+    // if (!B.keywords.empty())
+    addK(Index);
     return 0;
 }
 int BookManager::eraze(const Book &B, int Index) // 确保keywords已经更新
 {
     mapISBN().eraze(std::make_pair(B.ISBN, Index));
-    if (!B.name.empty())
-        mapName().eraze(std::make_pair(B.name, Index));
-    if (!B.author.empty())
-        mapAuthor().eraze(std::make_pair(B.author, Index));
-    if (!B.keywords.empty())
-        delK(Index);
+    // if (!B.name.empty())
+    mapName().eraze(std::make_pair(B.name, Index));
+    // if (!B.author.empty())
+    mapAuthor().eraze(std::make_pair(B.author, Index));
+    // if (!B.keywords.empty())
+    delK(Index);
     return 0;
 }
 int BookManager::splitKeys(const std::string &S, int &which)
@@ -149,6 +153,8 @@ int BookManager::splitKeys(const std::string &S, int &which)
         return 1;
     key.assign(S.begin(), L);
     L++;
+    if (L == S.end())
+        return 8;
     which = -1;
     for (int j = 0; j < BOOK_KEYS.max_size(); j++)
     {
@@ -192,8 +198,8 @@ int BookManager::modify(const std::vector<std::string> &S)
         int which;
         if (splitKeys(S.at(i), which))
             return 2;
-        if (value.empty())
-            return 3;
+        // if (value.empty())
+        //     return 3;
         BOOK_INFO info = static_cast<BOOK_INFO>(which);
         if (info == BOOK_INFO::ISBN)
             if (!tmp.ISBN.check(value))
