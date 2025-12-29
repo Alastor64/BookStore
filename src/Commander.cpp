@@ -167,5 +167,6 @@ int Commander::receptionist()
         //     for (int i = 0; i < tmpOut.size(); i++)
         //         std::cout << tmpOut.at(i) << std::endl;
     }
+    excute("exit");
     return 0;
 }
