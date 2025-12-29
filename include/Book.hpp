@@ -36,6 +36,6 @@ public:
     BookName name;
     BookAuthor author;
     BookKeywords keywords;
-    int quantity;
+    ll quantity;
     double price;
 };

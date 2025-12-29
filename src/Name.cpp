@@ -16,7 +16,7 @@ bool NAME::command(char c)
 {
     return visible(c) || c == SPLIT_CHAR;
 }
-int NAME::to_int(const std::string &S, int &an)
+int NAME::to_int(const std::string &S, ll &an)
 {
     if (S.length() > 10)
         return -1;
@@ -36,6 +36,8 @@ int NAME::to_int(const std::string &S, int &an)
         an = (an << 1) + (an << 3);
         an += S.at(i) & 15;
     }
+    if (abs(an) > INT32_MAX)
+        return 3;
     if (_)
         an = -an;
     return 0;

@@ -4,6 +4,8 @@
 #include <math.h>
 #include <string>
 #include <iostream>
+#include <cstdint>
+#include "CONSTEXPRS.hpp"
 enum class NAME_TYPE
 {
     NUM_LETTER, // 数字，字母，下划线
@@ -17,7 +19,7 @@ namespace NAME
     bool visible(char c);   // 除不可见字符以外 ASCII 字符;
     bool common(char c);    // 除不可见字符和英文双引号以外 ASCII 字符
     bool command(char c);
-    int to_int(const std::string &S, int &an);
+    int to_int(const std::string &S, ll &an);
     int to_real(const std::string &S, double &an);
     int is_positive_real(const std::string &S);
 }

@@ -84,7 +84,7 @@ int BookManager::buy(const std::vector<std::string> &S, double &Gain)
     if (index == END_INT)
         return 2;
     books().Read(&tmp, index);
-    int num;
+    ll num;
     if (NAME::to_int(S.at(1), num))
         return 3;
     if (num <= 0)
@@ -104,7 +104,7 @@ int BookManager::import(const std::vector<std::string> &S, double &cost)
     int index = UserManager::getBook();
     if (index == END_INT)
         return 1;
-    int num;
+    ll num;
     if (NAME::to_int(S.at(0), num))
         return 2;
     if (num <= 0)
