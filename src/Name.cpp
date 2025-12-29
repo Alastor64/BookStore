@@ -48,11 +48,6 @@ int NAME::to_real(const std::string &S, db &an)
         return -1;
     int _ = 0, i = 0;
     int SU = 0, MI = 0, fg = 0;
-    if (S.at(0) == '-')
-    {
-        _ = 1;
-        i++;
-    }
     if (S.at(i) == '.')
         return 6;
     if (i >= S.length())
