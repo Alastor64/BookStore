@@ -180,6 +180,7 @@ int BookManager::splitKeys(const std::string &S, int &which)
         L++;
     }
     value.assign(L, R);
+    assert(!value.empty());
     return 0;
 }
 int BookManager::modify(const std::vector<std::string> &S)
