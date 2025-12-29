@@ -8,3 +8,4 @@ constexpr int MAX_COMMAND_LENGTH = 500;
 constexpr char SPLIT_CHAR = ' ';
 const std::string INVALID = std::string("Invalid");
 typedef long long ll;
+typedef long double db;

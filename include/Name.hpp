@@ -20,7 +20,7 @@ namespace NAME
     bool common(char c);    // 除不可见字符和英文双引号以外 ASCII 字符
     bool command(char c);
     int to_int(const std::string &S, ll &an);
-    int to_real(const std::string &S, double &an);
+    int to_real(const std::string &S, db &an);
     int is_positive_real(const std::string &S);
 }
 template <int size, NAME_TYPE T>

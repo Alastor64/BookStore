@@ -42,7 +42,7 @@ int NAME::to_int(const std::string &S, ll &an)
         an = -an;
     return 0;
 }
-int NAME::to_real(const std::string &S, double &an)
+int NAME::to_real(const std::string &S, db &an)
 {
     if (S.length() > 13)
         return -1;
@@ -77,9 +77,9 @@ int NAME::to_real(const std::string &S, double &an)
     if (!MI)
         MI = 1;
     if (_)
-        an = -SU / double(MI);
+        an = -SU / db(MI);
     else
-        an = SU / double(MI);
+        an = SU / db(MI);
     return 0;
 }
 

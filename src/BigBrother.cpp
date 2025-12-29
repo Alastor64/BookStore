@@ -21,7 +21,7 @@ int BigBrother::show_finance(const std::vector<std::string> &S)
         std::cout << std::endl;
         return 0;
     }
-    double gain = 0.0, cost = 0.0;
+    db gain = 0.0, cost = 0.0;
     cashLog().top(count, tmp);
     for (int i = 0; i < tmp.size(); i++)
         if (tmp.at(i).isCost)

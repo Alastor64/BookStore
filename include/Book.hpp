@@ -37,5 +37,5 @@ public:
     BookAuthor author;
     BookKeywords keywords;
     ll quantity;
-    double price;
+    db price;
 };

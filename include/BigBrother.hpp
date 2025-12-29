@@ -2,11 +2,12 @@
 #include "Stack.hpp"
 #include <vector>
 #include <string>
+#include "CONSTEXPRS.hpp"
 class Finance
 {
 public:
     bool isCost;
-    double cash;
+    db cash;
 };
 namespace BigBrother
 {

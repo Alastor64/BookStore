@@ -73,7 +73,7 @@ int BookManager::select(const std::vector<std::string> &S)
     UserManager::selectedBooks().update();
     return 0;
 }
-int BookManager::buy(const std::vector<std::string> &S, double &Gain)
+int BookManager::buy(const std::vector<std::string> &S, db &Gain)
 {
     if (S.size() != 2)
         return -1;
@@ -97,7 +97,7 @@ int BookManager::buy(const std::vector<std::string> &S, double &Gain)
     std::cout << Gain << std::endl;
     return 0;
 }
-int BookManager::import(const std::vector<std::string> &S, double &cost)
+int BookManager::import(const std::vector<std::string> &S, db &cost)
 {
     if (S.size() != 2)
         return -1;
