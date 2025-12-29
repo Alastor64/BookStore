@@ -88,7 +88,10 @@ int Commander::excute(const std::string &inPut)
     if (tmp1 == "show")
     {
         if (!tmp2.empty() && tmp2.front() == "finance")
-            return BigBrother::show_finance(tmp2);
+            if (UserManager::getPrivilege() >= PRIVILEGE::BOSS)
+                return BigBrother::show_finance(tmp2);
+            else
+                return -13;
         else if (UserManager::getPrivilege() >= PRIVILEGE::GUEST)
             return BookManager::show(tmp2);
         else
