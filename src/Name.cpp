@@ -18,6 +18,8 @@ bool NAME::command(char c)
 }
 int NAME::to_int(const std::string &S, int &an)
 {
+    if (S.length() > 10)
+        return -1;
     int _ = 0, i = 0;
     an = 0;
     if (S.at(0) == '-')
@@ -40,6 +42,8 @@ int NAME::to_int(const std::string &S, int &an)
 }
 int NAME::to_real(const std::string &S, double &an)
 {
+    if (S.length() > 13)
+        return -1;
     int _ = 0, i = 0;
     int SU = 0, MI = 0, fg = 0;
     if (S.at(0) == '-')
@@ -79,6 +83,8 @@ int NAME::to_real(const std::string &S, double &an)
 
 int NAME::is_positive_real(const std::string &S)
 {
+    if (S.length() > 13)
+        return 0;
     int fg = 0, pos = 0;
     for (int i = 0; i < S.length(); i++)
     {
