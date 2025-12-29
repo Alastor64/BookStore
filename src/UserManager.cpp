@@ -21,7 +21,7 @@ int UserManager::userAdd(const std::vector<std::string> &S, PRIVILEGE p)
         u.password = S.at(1);
     else
         return 3;
-    if (!isPRIVILEGE(S.at(2)))
+    if (!isUserPRIVILEGE(S.at(2)))
         u.privilege = static_cast<PRIVILEGE>(S.at(2).at(0) - '0');
     else
         return 4;
