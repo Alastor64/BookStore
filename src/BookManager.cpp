@@ -32,6 +32,10 @@ int BookManager::split(const decltype(Book::keywords) &S)
     if (keywords.back().empty())
         return 1;
     // std::cout << keywords.size() << std::endl; // #
+    std::sort(keywords.begin(), keywords.end());
+    for (int i = 1; i < keywords.size(); i++)
+        if (keywords.at(i - 1) == keywords.at(i))
+            return 2;
     return 0;
 }
 int BookManager::addK(int index)
