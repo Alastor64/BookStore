@@ -222,9 +222,10 @@ int BookManager::modify(const std::vector<std::string> &S)
     }
     if (flag[static_cast<int>(BOOK_INFO::KEYWORD)] && split(tmp.keywords))
         return 6;
-    insert(tmp, index);
     split(tmp2.keywords);
     eraze(tmp2, index);
+    split(tmp.keywords);
+    insert(tmp, index);
     books().Update(&tmp, index);
     return 0;
 }

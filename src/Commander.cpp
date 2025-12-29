@@ -2,6 +2,7 @@
 #include "BookManager.hpp"
 #include "BigBrother.hpp"
 #include <iostream>
+#include <fstream>
 namespace Commander
 {
     std::string tmp1;
@@ -140,11 +141,24 @@ int Commander::excute(const std::string &inPut)
 
 int Commander::receptionist()
 {
+    bool DEBUG = 0;
+    std::fstream Log;
+    if (DEBUG)
+        Log.open("log.out", std::ios::out);
+    int num = 0;
     while (std::getline(std::cin, tmpIn))
     {
+        num++;
         int E;
         if (E = excute(tmpIn))
-            std::cout << INVALID << std::endl;
+        {
+            std::cout << INVALID;
+            if (DEBUG)
+                printf("<%d,%d>", num, E);
+            std::cout << std::endl;
+        }
+        else if (DEBUG)
+            Log << tmpIn << std::endl;
         //   << E << std::endl;
         // else
         //     for (int i = 0; i < tmpOut.size(); i++)
