@@ -24,8 +24,8 @@ int Commander::scanfString(it &L, it &R, std::string &S, const it &end)
 }
 int Commander::interpreter(const std::string &S)
 {
-    if (!Name<MAX_COMMAND_LENGTH, NAME_TYPE::COMMAND>::check(S))
-        return -1;
+    // if (!Name<MAX_COMMAND_LENGTH, NAME_TYPE::COMMAND>::check(S))
+    //     return -1;
     it L = S.begin(), R;
     if (scanfString(L, R, tmp1, S.end())) // 仅有空格
     {
