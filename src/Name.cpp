@@ -22,11 +22,6 @@ int NAME::to_int(const std::string &S, ll &an)
         return -1;
     int _ = 0, i = 0;
     an = 0;
-    if (S.at(0) == '-')
-    {
-        _ = 1;
-        i++;
-    }
     if (i >= S.length())
         return 1;
     for (; i < S.length(); i++)
