@@ -53,6 +53,8 @@ int NAME::to_real(const std::string &S, db &an)
         _ = 1;
         i++;
     }
+    if (S.at(i) == '.')
+        return 6;
     if (i >= S.length())
         return 1;
     for (; i < S.length(); i++)
@@ -72,6 +74,8 @@ int NAME::to_real(const std::string &S, db &an)
         MI = (MI << 1) + (MI << 3);
         SU += S.at(i) & 15;
     }
+    if (S.back() == '.')
+        return 5;
     if (MI == 1)
         return 4;
     if (!MI)
@@ -101,6 +105,8 @@ int NAME::is_positive_real(const std::string &S)
             pos = 1;
     }
     if (S.back() == '.')
+        return 0;
+    if (S.front() == '.')
         return 0;
     return pos;
 }
