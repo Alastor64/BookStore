@@ -19,6 +19,8 @@ public:
     Stack(const std::string &FN) // 仅读取栈顶，空栈不读取
     {
         Data = IO<T, 1>(FN, 1);
+        // if (!Data.reload())
+        //     Data.initialise();
         n = Data.Get_info(0);
         if (n)
             Data.Read(&topElement, topIndex());

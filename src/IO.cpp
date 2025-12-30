@@ -39,6 +39,14 @@ IO_base::IO_base(const std::string &FN, int EXTRA_INFO, bool NEED_INIT) : IO_bas
 
 // public
 
+IO_base &IO_base::operator=(const IO_base &tmp)
+{
+    fileSize = tmp.fileSize;
+    last = tmp.last;
+    back = tmp.back;
+    file_name = tmp.file_name;
+    return *this;
+}
 int IO_base::reload(const std::string &FN)
 {
     if (FN != "")
@@ -114,7 +122,12 @@ int IO_base::Write(const void *t, const int num)
     if (last == -1)
     {
         file = fopen(file_name.c_str(), "ab");
-        assert(file && ("write failed")[0]);
+        // assert(file && ("write failed")[0]);
+        if (!file)
+        {
+            std::cout << file_name << std::endl;
+            std::exit(0);
+        }
         fwrite(t, sizeofT(), num, file);
         fileSize += num;
         fclose(file);
@@ -125,7 +138,11 @@ int IO_base::Write(const void *t, const int num)
     {
         R = last;
         file = fopen(file_name.c_str(), "rb+");
-        assert(file && ("write failed")[0]);
+        if (!file)
+        {
+            std::cout << file_name << std::endl;
+            std::exit(0);
+        }
         fseek(file, R, SEEK_SET);
         fread(&last, sizeof(int), 1, file);
         fseek(file, R, SEEK_SET);

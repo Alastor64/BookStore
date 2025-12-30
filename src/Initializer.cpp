@@ -25,6 +25,7 @@ void Init()
         tmp.push_back(std::to_string(static_cast<int>(PRIVILEGE::BOSS)));
         tmp.push_back("Alastor");
         int _ = UserManager::userAdd(tmp, PRIVILEGE::BIG_BROTHER);
+        // printf("oo\n");
         // std::cout << _ << "\n";
     }
     // tmp.clear();

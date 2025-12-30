@@ -33,6 +33,7 @@ public:
     void Read(void *t, const int index, const int num);
     void Delete(const int index);
     int frontIndex(); // 类存储起始索引
+    IO_base &operator=(const IO_base &tmp);
 };
 
 template <class T, int EXTRA_INFO = 0>

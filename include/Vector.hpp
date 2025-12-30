@@ -14,6 +14,8 @@ public:
     Vector(const std::string &FN) // reload and then initialize if failed 未测试
     {
         Data = IO<T, 1>(FN, 1);
+        // if (!Data.reload())
+        //     Data.initialise();
         this->clear();
         int n = Data.Get_info(0);
         if (n)

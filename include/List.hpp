@@ -52,7 +52,7 @@ protected:
 public:
     List(const std::string &FN) : heads(FN + ".heads")
     {
-        Data = IO<Array, 0>(FN + ".block");
+        Data = IO<Array, 0>(FN + ".block", 1);
     }
     pii locate(const T &Value) // 查找最后一个小于等于Value的位置并载入对应块到tmp,不存在返回END
     {
@@ -73,6 +73,7 @@ public:
     }
     void insert(const T &Value)
     {
+        // printf("zz\n");
         if (heads.empty())
         {
             tmp.at(0) = Value;
