@@ -5,7 +5,7 @@ enum class PRIVILEGE
 {
     VISITOR = 0,
     GUEST = 1,
-    STARFF = 3,
+    STAFF = 3,
     BOSS = 7,
     BIG_BROTHER = 999,
 };

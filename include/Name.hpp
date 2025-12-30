@@ -67,11 +67,13 @@ public:
     {
         this->at(length++) = c;
     }
-    void print() const
+    void print(int w = 0, char f = ' ') const
     {
         for (int i = 0; i < length; i++)
             // printf("%c", this->at(i));
             std::cout << this->at(i);
+        for (int i = length; i < w; i++)
+            std::cout << f;
     }
     bool empty() const
     {

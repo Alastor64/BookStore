@@ -72,7 +72,7 @@ int Commander::excute(const std::string &inPut)
     }
     if (tmp1 == "useradd")
     {
-        if (UserManager::getPrivilege() >= PRIVILEGE::STARFF)
+        if (UserManager::getPrivilege() >= PRIVILEGE::STAFF)
             return UserManager::userAdd(tmp2, UserManager::getPrivilege());
         else
             return -6;
@@ -115,17 +115,17 @@ int Commander::excute(const std::string &inPut)
         else
             return -9;
     if (tmp1 == "select")
-        if (UserManager::getPrivilege() >= PRIVILEGE::STARFF)
+        if (UserManager::getPrivilege() >= PRIVILEGE::STAFF)
             return BookManager::select(tmp2);
         else
             return -10;
     if (tmp1 == "modify")
-        if (UserManager::getPrivilege() >= PRIVILEGE::STARFF)
+        if (UserManager::getPrivilege() >= PRIVILEGE::STAFF)
             return BookManager::modify(tmp2);
         else
             return -11;
     if (tmp1 == "import")
-        if (UserManager::getPrivilege() >= PRIVILEGE::STARFF)
+        if (UserManager::getPrivilege() >= PRIVILEGE::STAFF)
         {
             Finance Cost;
             Cost.isCost = 1;

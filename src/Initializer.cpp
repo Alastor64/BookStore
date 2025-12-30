@@ -91,3 +91,9 @@ Stack<Finance> &BigBrother::cashLog()
     static Stack<Finance> tmp("cashLog");
     return tmp;
 }
+
+Stack<FinanceReport> &BigBrother::financeLog()
+{
+    static Stack<FinanceReport> tmp("financeLog");
+    return tmp;
+}

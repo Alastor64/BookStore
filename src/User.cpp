@@ -9,13 +9,13 @@ bool isUserPRIVILEGE(const std::string &s)
     // std::cout << s << "\n";
     static const std::string GUEST(
         std::to_string(static_cast<int>(PRIVILEGE::GUEST)));
-    static const std::string STARFF(
-        std::to_string(static_cast<int>(PRIVILEGE::STARFF)));
+    static const std::string STAFF(
+        std::to_string(static_cast<int>(PRIVILEGE::STAFF)));
     static const std::string BOSS(
         std::to_string(static_cast<int>(PRIVILEGE::BOSS)));
     if (s == GUEST)
         return 0;
-    if (s == STARFF)
+    if (s == STAFF)
         return 0;
     if (s == BOSS)
         return 0;
