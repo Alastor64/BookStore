@@ -1,2 +1,2 @@
 #pragma once
-void Init();
+void Init(); // 初始化

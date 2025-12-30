@@ -5,28 +5,28 @@ class IO_base
 {
 
 protected:
-    FILE *file;
-    std::string file_name;
-    int info_len;
-    int extra_info;
-    virtual int sizeofT() = 0;
-    int last;          //= -1;最后一个被delete的位置距文件头的偏移量
-    int back;          //= info_len * sizeof(int);文件字节数
-    void updateinfo(); // 更新必要info信息last和back
-    std::string format(const std::string &FN);
-    IO_base();               // 默认文件名为空 extra_info=0
-    IO_base(int extra_info); // 默认文件名为空
-    IO_base(const std::string &filename, int extra_info = 0, bool NEED_INIT = 0);
+    FILE *file;                                                                   // tmp
+    std::string file_name;                                                        // 路径+文件名
+    int info_len;                                                                 // 存储的int数量
+    int extra_info;                                                               // 额外存储的int数量 默认额外int值为0
+    virtual int sizeofT() = 0;                                                    // 存储类字节数
+    int last;                                                                     //= -1;最后一个被delete的位置距文件头的偏移量
+    int back;                                                                     //= info_len * sizeof(int);文件字节数
+    void updateinfo();                                                            // 更新必要info信息last和back
+    std::string format(const std::string &FN);                                    // 文件名格式化（加上路径和扩展名）
+    IO_base();                                                                    // 默认文件名为空 extra_info=0
+    IO_base(int extra_info);                                                      // 默认文件名为空
+    IO_base(const std::string &filename, int extra_info = 0, bool NEED_INIT = 0); // 默认extra_info=0 NEED_INIT=0
 
 public:
     int fileSize;                                // 文件当前能存储类的最大数量
     int reload(const std::string &FN = "");      // 读取名为FN的文件并绑定，留空则读取原绑定文件
     void initialise(const std::string &FN = ""); // 初始化名为FN的文件并绑定，留空则初始化原绑定文件
-    int Get_info(int n);
-    void Write_info(int tmp, int n);
-    int Peep(); // 返回下一个插入索引 未测试
-    int Write(const void *t);
-    int Write(const void *t, const int num); // WARNING 仅用于不使用Delete的类型
+    int Get_info(int n);                         // 返回第n个额外存储的int（0-base）
+    void Write_info(int tmp, int n);             // 更新第n个额外存储的int（0-base）
+    int Peep();                                  // 返回下一个插入索引 未测试
+    int Write(const void *t);                    // 添加一个类
+    int Write(const void *t, const int num);     // 添加num个类（WARNING 仅用于不使用Delete的类型）
     void Update(const void *t, const int index);
     void Update(const void *t, const int index, const int num); // WARNING 仅用于不使用Delete的类型
     void Read(void *t, const int index);

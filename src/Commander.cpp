@@ -10,8 +10,9 @@ namespace Commander
     std::string tmpIn;
     // std::vector<std::string> tmpOut;
 }
-int Commander::scanfString(it &L, it &R, std::string &S, const it &end)
+int Commander::scanfString(it &L, std::string &S, const it &end)
 {
+    it R;
     while (L != end && *L == SPLIT_CHAR)
         L++;
     if (L == end)
@@ -26,8 +27,8 @@ int Commander::interpreter(const std::string &S)
 {
     // if (!Name<MAX_COMMAND_LENGTH, NAME_TYPE::COMMAND>::check(S))
     //     return -1;
-    it L = S.begin(), R;
-    if (scanfString(L, R, tmp1, S.end())) // 仅有空格
+    it L = S.begin();
+    if (scanfString(L, tmp1, S.end())) // 仅有空格
     {
         tmp1.clear();
         return 0;
@@ -35,9 +36,8 @@ int Commander::interpreter(const std::string &S)
     tmp2.clear();
     while (1)
     {
-        L = R;
         tmp2.push_back("");
-        if (scanfString(L, R, tmp2.back(), S.end()))
+        if (scanfString(L, tmp2.back(), S.end()))
         {
             tmp2.pop_back();
             break;
