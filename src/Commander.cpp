@@ -21,6 +21,7 @@ int Commander::scanfString(it &L, std::string &S, const it &end)
     while (R != end && *R != SPLIT_CHAR)
         R++;
     S.assign(L, R);
+    L = R;
     return 0;
 }
 int Commander::interpreter(const std::string &S)
