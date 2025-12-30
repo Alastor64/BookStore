@@ -36,7 +36,8 @@ void Init()
 
 IO<User> &UserManager::users()
 {
-    return IO<User>::instance("Users");
+    static IO<User> tmp("Users", 1);
+    return tmp;
 }
 
 Map<decltype(User::ID)> &UserManager::mapID()
@@ -58,7 +59,8 @@ Stack<int> &UserManager::selectedBooks()
 }
 IO<Book> &BookManager::books()
 {
-    return IO<Book>::instance("Books");
+    static IO<Book> tmp("Books", 1);
+    return tmp;
 }
 
 Map<decltype(Book::ISBN)> &BookManager::mapISBN()

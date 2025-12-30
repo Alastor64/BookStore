@@ -27,12 +27,8 @@ private:
 
 protected:
     Array tmp;
-    std::string filename;
     Vector<Head<T>> heads;
-    IO<Array, 0> &Data()
-    {
-        return IO<Array, 0>::instance(filename + ".block");
-    }
+    IO<Array, 0> Data;
     int locateArray(const T &Value, int n) // 查找tmp中最后一个小于等于Value的位置,不存在返回END
     {
         int fg = END_INT;
@@ -54,7 +50,10 @@ protected:
     }
 
 public:
-    List(const std::string &FN) : filename(FN), heads(FN + ".heads") {}
+    List(const std::string &FN) : heads(FN + ".heads")
+    {
+        Data = IO<Array, 0>(FN + ".block");
+    }
     pii locate(const T &Value) // 查找最后一个小于等于Value的位置并载入对应块到tmp,不存在返回END
     {
         if (heads.empty() || heads.front().value > Value)
@@ -63,12 +62,12 @@ public:
         {
             if (heads.at(i).value > Value)
             {
-                Data().Read(&tmp, heads.at(i - 1).index);
+                Data.Read(&tmp, heads.at(i - 1).index);
                 int j = locateArray(Value, heads.at(i - 1).blockSize);
                 return pii(i - 1, j);
             }
         }
-        Data().Read(&tmp, heads.back().index);
+        Data.Read(&tmp, heads.back().index);
         int j = locateArray(Value, heads.back().blockSize);
         return pii(heads.size() - 1, j);
     }
@@ -77,7 +76,7 @@ public:
         if (heads.empty())
         {
             tmp.at(0) = Value;
-            heads.push_back(Head(tmp.front(), 1, Data().Write(&tmp)));
+            heads.push_back(Head(tmp.front(), 1, Data.Write(&tmp)));
             heads.update();
             return;
         }
@@ -86,7 +85,7 @@ public:
         if (index == END_PII)
         {
             i = 0;
-            Data().Read(&tmp, heads.front().index);
+            Data.Read(&tmp, heads.front().index);
             insertArray(Value, 0);
         }
         else
@@ -95,14 +94,14 @@ public:
             insertArray(Value, index.second + 1);
         }
         heads.at(i).value = tmp.front();
-        Data().Update(&tmp, heads.at(i).index);
+        Data.Update(&tmp, heads.at(i).index);
         heads.at(i).blockSize++;
         if (heads.at(i).blockSize >= MAX_BLOCK_SIZE)
         {
             heads.at(i).blockSize = MAX_BLOCK_SIZE >> 1;
             for (int i = 0; i < (MAX_BLOCK_SIZE >> 1); i++)
                 tmp.at(i) = tmp.at(i + (MAX_BLOCK_SIZE >> 1));
-            heads.insert(heads.begin() + i + 1, Head(tmp.front(), MAX_BLOCK_SIZE >> 1, Data().Write(&tmp)));
+            heads.insert(heads.begin() + i + 1, Head(tmp.front(), MAX_BLOCK_SIZE >> 1, Data.Write(&tmp)));
         }
         heads.update();
     }
@@ -128,11 +127,11 @@ public:
             if (heads.at(index.first).blockSize > 0)
             {
                 heads.at(index.first).value = tmp.front();
-                Data().Update(&tmp, heads.at(index.first).index);
+                Data.Update(&tmp, heads.at(index.first).index);
             }
             else
             {
-                Data().Delete(heads.at(index.first).index);
+                Data.Delete(heads.at(index.first).index);
                 heads.erase(heads.begin() + index.first);
             }
             heads.update();

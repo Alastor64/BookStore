@@ -10,9 +10,10 @@ protected:
     int info_len;
     int extra_info;
     virtual int sizeofT() = 0;
-    int last;                //= -1;最后一个被delete的位置距文件头的偏移量
-    int back;                //= info_len * sizeof(int);文件字节数
-    void updateinfo();       // 更新必要info信息last和back
+    int last;          //= -1;最后一个被delete的位置距文件头的偏移量
+    int back;          //= info_len * sizeof(int);文件字节数
+    void updateinfo(); // 更新必要info信息last和back
+    std::string format(const std::string &FN);
     IO_base();               // 默认文件名为空 extra_info=0
     IO_base(int extra_info); // 默认文件名为空
     IO_base(const std::string &filename, int extra_info = 0, bool NEED_INIT = 0);
@@ -48,7 +49,7 @@ public:
     IO(const std::string &filename, bool NEED_INIT = 0) : IO_base(filename, EXTRA_INFO, NEED_INIT) {}
     static IO<T, EXTRA_INFO> &instance(const std::string &className)
     {
-        static IO<T, EXTRA_INFO> Instance(className + ".data", 1); // WARNING!
+        static IO<T, EXTRA_INFO> Instance(className, 1); // WARNING!
         return Instance;
     }
 };

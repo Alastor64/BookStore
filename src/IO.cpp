@@ -14,6 +14,11 @@ void IO_base::updateinfo()
     fclose(file);
 }
 
+std::string IO_base::format(const std::string &FN)
+{
+    return DATA_PATH + FN + ".data";
+}
+
 IO_base::IO_base() : IO_base(0) {}
 
 IO_base::IO_base(int EXTRA_INFO)
@@ -22,9 +27,9 @@ IO_base::IO_base(int EXTRA_INFO)
     info_len = 3 + EXTRA_INFO;
 }
 
-IO_base::IO_base(const std::string &filename, int EXTRA_INFO, bool NEED_INIT) : IO_base(EXTRA_INFO)
+IO_base::IO_base(const std::string &FN, int EXTRA_INFO, bool NEED_INIT) : IO_base(EXTRA_INFO)
 {
-    file_name = DATA_PATH + filename;
+    file_name = format(FN);
     if (NEED_INIT)
     {
         if (!reload())
@@ -37,7 +42,7 @@ IO_base::IO_base(const std::string &filename, int EXTRA_INFO, bool NEED_INIT) : 
 int IO_base::reload(const std::string &FN)
 {
     if (FN != "")
-        file_name = FN;
+        file_name = format(FN);
     file = fopen(file_name.c_str(), "rb+");
     if (file)
     {
@@ -54,7 +59,7 @@ int IO_base::reload(const std::string &FN)
 void IO_base::initialise(const std::string &FN)
 {
     if (FN != "")
-        file_name = DATA_PATH + FN;
+        file_name = format(FN);
     file = fopen(file_name.c_str(), "wb");
     int tmp = 0;
     for (int i = 0; i < info_len; i++)
