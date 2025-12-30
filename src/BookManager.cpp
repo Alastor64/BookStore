@@ -101,7 +101,7 @@ int BookManager::buy(const std::vector<std::string> &S, db &Gain)
     std::cout << Gain << std::endl;
     return 0;
 }
-int BookManager::import(const std::vector<std::string> &S, db &cost)
+int BookManager::import(const std::vector<std::string> &S, db &Cost)
 {
     if (S.size() != 2)
         return -1;
@@ -118,7 +118,7 @@ int BookManager::import(const std::vector<std::string> &S, db &cost)
     books().Read(&tmp, index);
     tmp.quantity += num;
     books().Update(&tmp, index);
-    NAME::to_real(S.at(1), cost);
+    NAME::to_real(S.at(1), Cost);
     return 0;
 }
 int BookManager::insert(const Book &B, int Index) // 确保keywords已经更新
@@ -163,8 +163,8 @@ int BookManager::splitKeys(const std::string &S, int &which)
     }
     if (which == -1)
         return 2;
-    if (flag[which])
-        return 3;
+    // if (flag[which])
+    //     return 3;
     R = S.end();
     if (NEED_QUOTE[which])
     {
@@ -202,6 +202,8 @@ int BookManager::modify(const std::vector<std::string> &S)
             return 2;
         // if (value.empty())
         //     return 3;
+        if (flag[which])
+            return 3;
         BOOK_INFO info = static_cast<BOOK_INFO>(which);
         if (info == BOOK_INFO::ISBN)
             if (!tmp.ISBN.check(value))
@@ -249,8 +251,8 @@ int BookManager::show(const std::vector<std::string> &S)
     else
     {
         int which;
-        for (int i = 0; i < BOOK_KEYS.max_size(); i++)
-            flag[i] = 0;
+        // for (int i = 0; i < BOOK_KEYS.max_size(); i++)
+        //     flag[i] = 0;
         if (splitKeys(S.at(0), which))
         {
             // printf(":%d\n", splitKeys(S.at(0), which)); // #

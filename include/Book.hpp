@@ -2,40 +2,16 @@
 #include "Name.hpp"
 #include "Base.hpp"
 #include <string>
-// class BookISBN : public Name<20, NAME_TYPE::VISIBLE>
-// {
-// public:
-//     BookISBN() : Name<20, NAME_TYPE::VISIBLE>() {}
-//     BookISBN(const std::string &s) : Name<20, NAME_TYPE::VISIBLE>(s) {}
-// };
-// class BookName : public Name<60, NAME_TYPE::COMMON>
-// {
-// public:
-//     BookName() : Name<60, NAME_TYPE::COMMON>() {}
-//     BookName(const std::string &s) : Name<60, NAME_TYPE::COMMON>(s) {}
-// };
-// class BookAuthor : public Name<60, NAME_TYPE::COMMON>
-// {
-// public:
-//     BookAuthor() : Name<60, NAME_TYPE::COMMON>() {}
-//     BookAuthor(const std::string &s) : Name<60, NAME_TYPE::COMMON>(s) {}
-// };
-// class BookKeywords : public Name<60, NAME_TYPE::COMMON>
-// {
-// public:
-//     BookKeywords() : Name<60, NAME_TYPE::COMMON>() {}
-//     BookKeywords(const std::string &s) : Name<60, NAME_TYPE::COMMON>(s) {}
-// };
-class Book : public Base
+class Book : public Base // 书本信息
 {
 public:
-    Book() {}
-    Book(const std::string &_ISBN);
-    void init(const std::string &_ISBN);
-    Name<20, NAME_TYPE::VISIBLE> ISBN;
-    Name<60, NAME_TYPE::COMMON> name;
-    Name<60, NAME_TYPE::COMMON> author;
-    Name<60, NAME_TYPE::COMMON> keywords;
-    ll quantity;
-    db price;
+    Book() {}                             // 这是个空函数
+    Book(const std::string &_ISBN);       // 仅有ISBN，其他条目均为空
+    void init(const std::string &_ISBN);  // 设置ISBN，清空其他条目
+    Name<20, NAME_TYPE::VISIBLE> ISBN;    // ISBN
+    Name<60, NAME_TYPE::COMMON> name;     // 书名
+    Name<60, NAME_TYPE::COMMON> author;   // 作者
+    Name<60, NAME_TYPE::COMMON> keywords; // 关键字
+    ll quantity;                          // 库存
+    db price;                             // 售价
 };
