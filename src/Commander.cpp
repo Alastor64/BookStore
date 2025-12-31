@@ -8,6 +8,8 @@ namespace Commander
     std::string tmp1;
     std::vector<std::string> tmp2;
     std::string tmpIn;
+    Report r;
+    User u;
     // std::vector<std::string> tmpOut;
 }
 int Commander::scanfString(it &L, std::string &S, const it &end)
@@ -62,25 +64,25 @@ int Commander::excute(const std::string &inPut)
             return -4;
     }
     if (tmp1 == "register")
-        return UserManager::Register(tmp2);
+        return r.operation = COMMAND_TYPE::ADD, UserManager::Register(tmp2);
     if (tmp1 == "passwd")
     {
         if (UserManager::getPrivilege() >= PRIVILEGE::GUEST)
-            return UserManager::passwd(tmp2, UserManager::getPrivilege());
+            return r.operation = COMMAND_TYPE::PASSWD, UserManager::passwd(tmp2, UserManager::getPrivilege());
         else
             return -5;
     }
     if (tmp1 == "useradd")
     {
         if (UserManager::getPrivilege() >= PRIVILEGE::STAFF)
-            return UserManager::userAdd(tmp2, UserManager::getPrivilege());
+            return r.operation = COMMAND_TYPE::ADD, UserManager::userAdd(tmp2, UserManager::getPrivilege());
         else
             return -6;
     }
     if (tmp1 == "delete")
     {
         if (UserManager::getPrivilege() >= PRIVILEGE::BOSS)
-            return UserManager::Delete(tmp2);
+            return r.operation = COMMAND_TYPE::DELETE, UserManager::Delete(tmp2);
         else
             return -7;
     }
@@ -103,6 +105,7 @@ int Commander::excute(const std::string &inPut)
         {
             Finance Gain;
             Gain.isCost = 0;
+            r.operation = COMMAND_TYPE::BUY;
             int _ = BookManager::buy(tmp2, Gain.cash);
             if (_)
                 return _;
@@ -116,12 +119,12 @@ int Commander::excute(const std::string &inPut)
             return -9;
     if (tmp1 == "select")
         if (UserManager::getPrivilege() >= PRIVILEGE::STAFF)
-            return BookManager::select(tmp2);
+            return r.operation = COMMAND_TYPE::CREATE, BookManager::select(tmp2);
         else
             return -10;
     if (tmp1 == "modify")
         if (UserManager::getPrivilege() >= PRIVILEGE::STAFF)
-            return BookManager::modify(tmp2);
+            return r.operation = COMMAND_TYPE::MODIFY, BookManager::modify(tmp2);
         else
             return -11;
     if (tmp1 == "import")
@@ -129,6 +132,7 @@ int Commander::excute(const std::string &inPut)
         {
             Finance Cost;
             Cost.isCost = 1;
+            r.operation = COMMAND_TYPE::IMPORT;
             int _ = BookManager::import(tmp2, Cost.cash);
             if (_)
                 return _;
@@ -140,6 +144,21 @@ int Commander::excute(const std::string &inPut)
         }
         else
             return -12;
+    if (tmp1 == "report")
+    {
+        if (UserManager::getPrivilege() < PRIVILEGE::BOSS)
+            return -13;
+        if (tmp2.at(0) == "finance")
+            return BigBrother::report_finance(tmp2);
+        if (tmp2.at(0) == "employee")
+            return BigBrother::report_employee(tmp2);
+    }
+    if (tmp1 == "log")
+    {
+        if (UserManager::getPrivilege() < PRIVILEGE::BOSS)
+            return -14;
+        return BigBrother::log(tmp2);
+    }
     return -3;
 }
 
@@ -152,6 +171,16 @@ int Commander::receptionist()
     int num = 0;
     while (std::getline(std::cin, tmpIn))
     {
+        r.T = time(NULL);
+        int index;
+        if (UserManager::getIndex(index))
+            r.account = std::string("");
+        else
+        {
+            UserManager::users().Read(&u, index);
+            r.account = u.ID;
+        }
+        r.privilege = UserManager::getPrivilege();
         num++;
         int E;
         if (E = excute(tmpIn))

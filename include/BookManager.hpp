@@ -1,18 +1,6 @@
 #pragma
 #include "Book.hpp"
 #include "UserManager.hpp"
-constexpr char KEYWORDS_SPLIT_CHAR = '|';                // 关键字分隔符
-const std::array<std::string, 5> BOOK_KEYS =             // 与BOOK_INFO对应
-    {"-ISBN", "-name", "-author", "-keyword", "-price"}; //
-constexpr bool NEED_QUOTE[] = {0, 1, 1, 1, 0};           // value是否需加引号
-enum class BOOK_INFO                                     // 部分书本信息条目
-{
-    ISBN,    // ISBN
-    NAME,    // 书名
-    AUTHOR,  // 作者
-    KEYWORD, // 关键字
-    PRICE,   // 售价
-};
 namespace BookManager // 负责图书相关操作
 {
     IO<Book, 0> &books();                                    // 记录所有Book类，记index为每个Book类在其中的索引

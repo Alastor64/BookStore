@@ -9,3 +9,4 @@ constexpr char SPLIT_CHAR = ' ';                                          // 指
 const std::string INVALID = std::string("Invalid");                       // 非法反馈输出
 typedef long long ll;                                                     // long long
 typedef long double db;                                                   // long double
+const std::string REPORT_SPLIT = "    ";                                  //"║";

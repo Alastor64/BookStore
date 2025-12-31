@@ -97,3 +97,13 @@ Stack<FinanceReport> &BigBrother::financeLog()
     static Stack<FinanceReport> tmp("financeLog");
     return tmp;
 }
+Stack<UserReport> &BigBrother::userLog()
+{
+    static Stack<UserReport> tmp("userLog");
+    return tmp;
+}
+Stack<BookReport> &BigBrother::bookLog()
+{
+    static Stack<BookReport> tmp("bookLog");
+    return tmp;
+}

@@ -2,6 +2,8 @@
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
+#include "BigBrother.hpp"
+#include "Commander.hpp"
 namespace BookManager
 {
     Book tmp, tmp2;
@@ -11,6 +13,8 @@ namespace BookManager
     bool flag[BOOK_KEYS.max_size()];
     std::vector<int> tmpIndex;
     std::vector<std::pair<decltype(Book::ISBN), int>> tmpSort;
+    FinanceReport tmpFr;
+    BookReport tmpBr;
 }
 int BookManager::split(const decltype(Book::keywords) &S)
 {
@@ -72,6 +76,9 @@ int BookManager::select(const std::vector<std::string> &S)
         mapISBN().insert(std::make_pair(tmp.ISBN, index));
         mapName().insert(std::make_pair(tmp.name, index));
         mapAuthor().insert(std::make_pair(tmp.author, index));
+        tmpBr = Commander::r;
+        tmpBr.book = tmp.ISBN;
+        BigBrother::bookLog().push(tmpBr);
     }
     UserManager::selectedBooks().top() = index;
     UserManager::selectedBooks().update();
@@ -99,6 +106,11 @@ int BookManager::buy(const std::vector<std::string> &S, db &Gain)
     books().Update(&tmp, index);
     Gain = num * tmp.price;
     std::cout << Gain << std::endl;
+    tmpFr = FinanceReport(Commander::r);
+    tmpFr.book = tmp.ISBN;
+    tmpFr.deltaQ = num;
+    tmpFr.deltaC = Gain;
+    BigBrother::financeLog().push(tmpFr);
     return 0;
 }
 int BookManager::import(const std::vector<std::string> &S, db &Cost)
@@ -119,6 +131,11 @@ int BookManager::import(const std::vector<std::string> &S, db &Cost)
     tmp.quantity += num;
     books().Update(&tmp, index);
     NAME::to_real(S.at(1), Cost);
+    tmpFr = FinanceReport(Commander::r);
+    tmpFr.book = tmp.ISBN;
+    tmpFr.deltaQ = num;
+    tmpFr.deltaC = Cost;
+    BigBrother::financeLog().push(tmpFr);
     return 0;
 }
 int BookManager::insert(const Book &B, int Index) // 确保keywords已经更新
@@ -146,12 +163,14 @@ int BookManager::eraze(const Book &B, int Index) // 确保keywords已经更新
 int BookManager::splitKeys(const std::string &S, int &which)
 {
     typedef std::string::const_iterator it;
+    if (S.front() != '-')
+        return -1;
     it L = S.begin(), R;
     while (L != S.end() && *L != '=')
         L++;
     if (L == S.end())
         return 1;
-    key.assign(S.begin(), L);
+    key.assign(S.begin() + 1, L);
     L++;
     if (L == S.end())
         return 8;
@@ -240,6 +259,24 @@ int BookManager::modify(const std::vector<std::string> &S)
     split(tmp2.keywords);
     eraze(tmp2, index);
     books().Update(&tmp, index);
+    tmpBr = Commander::r;
+    tmpBr.book = tmp2.ISBN;
+    for (int i = BOOK_KEYS.max_size() - 1; i > -1; i--)
+        if (flag[i])
+        {
+            tmpBr.key = static_cast<BOOK_INFO>(i);
+            if (tmpBr.key == BOOK_INFO::ISBN)
+                tmpBr.tmp1 = tmp.ISBN;
+            if (tmpBr.key == BOOK_INFO::PRICE)
+                tmpBr.tmp3 = tmp.price;
+            if (tmpBr.key == BOOK_INFO::NAME)
+                tmpBr.tmp2 = tmp.name;
+            if (tmpBr.key == BOOK_INFO::AUTHOR)
+                tmpBr.tmp2 = tmp.author;
+            if (tmpBr.key == BOOK_INFO::KEYWORD)
+                tmpBr.tmp2 = tmp.keywords;
+            BigBrother::bookLog().push(tmpBr);
+        }
     return 0;
 }
 int BookManager::show(const std::vector<std::string> &S)
@@ -312,7 +349,6 @@ int BookManager::show(const std::vector<std::string> &S)
         std::cout << tmp.price;
         std::cout << "\t";
         std::cout << tmp.quantity;
-        std::cout << std::endl;
     }
     return 0;
 }

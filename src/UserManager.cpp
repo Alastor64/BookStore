@@ -1,8 +1,11 @@
 #include "UserManager.hpp"
+#include "BigBrother.hpp"
+#include "Commander.hpp"
 namespace UserManager
 {
     User u;
     std::vector<std::string> tmp;
+    UserReport tmpUr;
 }
 int UserManager::userAdd(const std::vector<std::string> &S, PRIVILEGE p)
 {
@@ -33,6 +36,10 @@ int UserManager::userAdd(const std::vector<std::string> &S, PRIVILEGE p)
         return 6;
     u.clear();
     mapID().insert(std::make_pair(u.ID, users().Write(&u)));
+    tmpUr = Commander::r;
+    tmpUr.user = u.ID;
+    tmpUr.passwd = u.password;
+    BigBrother::userLog().push(tmpUr);
     return 0;
 }
 int UserManager::passwd(const std::vector<std::string> &S, PRIVILEGE p)
@@ -63,6 +70,10 @@ int UserManager::passwd(const std::vector<std::string> &S, PRIVILEGE p)
         return 5;
     u.password = S.back();
     users().Update(&u, index);
+    tmpUr = Commander::r;
+    tmpUr.user = u.ID;
+    tmpUr.passwd = u.password;
+    BigBrother::userLog().push(tmpUr);
     return 0;
 }
 int UserManager::Register(std::vector<std::string> &S)
@@ -121,7 +132,8 @@ int UserManager::Delete(const std::vector<std::string> &S)
         return -1;
     if (!u.ID.check(S.at(0)))
         return 1;
-    int index = mapID().show(S.at(0));
+    u.ID = S.at(0);
+    int index = mapID().show(u.ID);
     if (index == END_INT)
         return 2;
     users().Read(&u, index);
@@ -129,6 +141,9 @@ int UserManager::Delete(const std::vector<std::string> &S)
         return 3;
     users().Delete(index);
     mapID().eraze(std::make_pair(u.ID, index));
+    tmpUr = Commander::r;
+    tmpUr.user = u.ID;
+    BigBrother::userLog().push(tmpUr);
     return 0;
 }
 PRIVILEGE UserManager::getPrivilege()

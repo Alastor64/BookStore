@@ -43,24 +43,57 @@ namespace COMMAND_TYPE
 class Report
 {
 public:
+    Report() {}
+    Report(const Report &tmp);
     time_t T;
     PRIVILEGE privilege;
     decltype(User::ID) account;
     COMMAND_TYPE::COMMAND operation;
     void headprint();
 };
-class FinanceReport
+class FinanceReport : public Report
 {
+private:
+    static const std::string unit;
+
 public:
+    FinanceReport() {}
+    FinanceReport(const Report &tmp);
     decltype(Book::ISBN) book;
     decltype(Book::quantity) deltaQ;
     decltype(Book::price) deltaC;
     void print();
 };
+class UserReport : public Report
+{
+public:
+    UserReport() {}
+    UserReport(const Report &tmp);
+    decltype(User::ID) user;
+    decltype(User::password) passwd;
+    void print();
+};
+class BookReport : public Report
+{
+public:
+    BookReport() {}
+    BookReport(const Report &tmp);
+    decltype(Book::ISBN) book;
+    BOOK_INFO key;
+    decltype(Book::ISBN) tmp1;
+    decltype(Book::name) tmp2;
+    decltype(Book::price) tmp3;
+    void print();
+};
 namespace BigBrother // 负责日志相关操作
 {
+    Stack<BookReport> &bookLog();
+    Stack<UserReport> &userLog();
     Stack<FinanceReport> &financeLog();
     Stack<Finance> &cashLog();                           // 资金变动日志
     int show_finance(const std::vector<std::string> &S); // 指令 财务记录查询
     std::string PRIVILEGE_name(PRIVILEGE p);
+    int report_finance(const std::vector<std::string> &S);
+    int report_employee(const std::vector<std::string> &S);
+    int log(const std::vector<std::string> &S);
 }
