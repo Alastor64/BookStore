@@ -12,7 +12,7 @@ public:
     db cash;     // 金额
 };
 
-namespace COMMAND_TYPE
+namespace COMMAND_TYPE // 更改数据的操作
 {
     enum COMMAND
     {
@@ -25,7 +25,7 @@ namespace COMMAND_TYPE
         PASSWD,
         COMMAND_COUNT
     };
-    const std::string name[COMMAND_COUNT] = {
+    const std::string name[COMMAND_COUNT] = { // 更改数据的操作名称
         "modify",
         "buy",
         "import",
@@ -34,31 +34,31 @@ namespace COMMAND_TYPE
         "delete",
         "passwd"};
 }
-class Report
+class Report // 单条日志 时间+操作者+操作
 {
 public:
     Report() {}
     Report(const Report &tmp);
-    time_t T;
-    PRIVILEGE privilege;
-    decltype(User::ID) account;
-    COMMAND_TYPE::COMMAND operation;
-    void headprint();
+    time_t T;                        // 时间
+    PRIVILEGE privilege;             // 身份
+    decltype(User::ID) account;      // 操作者
+    COMMAND_TYPE::COMMAND operation; // 操作
+    void headprint();                // 输出
 };
-class FinanceReport : public Report
+class FinanceReport : public Report // 单条财务日志
 {
 private:
-    static const std::string unit;
+    static const std::string unit; // 金额单位
 
 public:
     FinanceReport() {}
     FinanceReport(const Report &tmp);
-    decltype(Book::ISBN) book;
-    decltype(Book::quantity) deltaQ;
-    decltype(Book::price) deltaC;
-    void print();
+    decltype(Book::ISBN) book;       // 操作对象
+    decltype(Book::quantity) deltaQ; // 库存变化绝对值
+    decltype(Book::price) deltaC;    // 资金变化绝对值
+    void print();                    // 输出
 };
-class UserReport : public Report
+class UserReport : public Report // 单条账户变动日志
 {
 public:
     UserReport() {}

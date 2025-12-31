@@ -163,6 +163,7 @@ int BookManager::splitKeys(const std::string &S, int &which)
     typedef std::string::const_iterator it;
     if (S.front() != '-')
         return -1;
+    // printf("oo\n");
     it L = S.begin(), R;
     while (L != S.end() && *L != '=')
         L++;
@@ -178,8 +179,10 @@ int BookManager::splitKeys(const std::string &S, int &which)
         if (key == BOOK_KEYS.at(j))
             which = j;
     }
+    // printf("oo\n");
     if (which == -1)
         return 2;
+    // printf("oo\n");
     // if (flag[which])
     //     return 3;
     R = S.end();
@@ -199,6 +202,7 @@ int BookManager::splitKeys(const std::string &S, int &which)
     value.assign(L, R);
     if (value.empty())
         return -1;
+    // printf("oo\n");
     return 0;
 }
 int BookManager::modify(const std::vector<std::string> &S)

@@ -1,7 +1,6 @@
 #include "BigBrother.hpp"
 #include "Stack.hpp"
 #include "MyTypedef.hpp"
-#include "User.hpp"
 #include "Name.hpp"
 #include "MyTypedef.hpp"
 const std::string REPORT_SPLIT = " "; //"║";表格列分隔符
@@ -163,6 +162,11 @@ int BigBrother::report_employee(const std::vector<std::string> &S)
         if (j < tmpUr.size() && tmpUr.at(j).privilege < PRIVILEGE::STAFF)
         {
             j++;
+            continue;
+        }
+        if (k < tmpUr.size() && tmpUr.at(k).privilege < PRIVILEGE::STAFF)
+        {
+            k++;
             continue;
         }
         print(i, j, k);
