@@ -1,6 +1,4 @@
 #include "UserManager.hpp"
-#include "BigBrother.hpp"
-#include "Commander.hpp"
 namespace UserManager
 {
     User u;

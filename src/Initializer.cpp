@@ -1,12 +1,4 @@
 #include "Initializer.hpp"
-#include "UserManager.hpp"
-#include "User.hpp"
-#include "Commander.hpp"
-#include "BookManager.hpp"
-#include "BigBrother.hpp"
-#include <filesystem>
-#include <iostream>
-#include <iomanip>
 namespace FS = std::filesystem;
 void Init()
 {

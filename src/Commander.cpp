@@ -1,8 +1,7 @@
 #include "Commander.hpp"
+#include "UserManager.hpp"
 #include "BookManager.hpp"
 #include "BigBrother.hpp"
-#include <iostream>
-#include <fstream>
 namespace Commander
 {
     std::string tmp1;

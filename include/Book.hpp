@@ -1,7 +1,6 @@
 #pragma once
-#include "Name.hpp"
-#include "Base.hpp"
 #include <string>
+#include "Name.hpp"
 constexpr char KEYWORDS_SPLIT_CHAR = '|';           // 关键字分隔符
 const std::array<std::string, 5> BOOK_KEYS =        // 与BOOK_INFO对应
     {"ISBN", "name", "author", "keyword", "price"}; //
@@ -14,7 +13,7 @@ enum class BOOK_INFO                                // 部分书本信息条目
     KEYWORD, // 关键字
     PRICE,   // 售价
 };
-class Book : public Base // 书本信息
+class Book // 书本信息
 {
 public:
     Book() {}                             // 这是个空函数

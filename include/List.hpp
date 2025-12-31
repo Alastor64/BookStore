@@ -2,7 +2,10 @@
 #include <array>
 #include <string>
 #include "Vector.hpp"
-#include "CONSTEXPRS.hpp"
+#include "MyTypedef.hpp"
+constexpr int END_INT = -1;                                               // END
+constexpr std::pair<int, int> END_PII = std::pair<int, int>(-1, END_INT); // END
+constexpr int MAX_BLOCK_SIZE = 512;                                       // 最大块大小
 template <class T>
 class Head
 {

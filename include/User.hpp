@@ -1,5 +1,4 @@
 #pragma once
-#include "Base.hpp"
 #include "Name.hpp"
 enum class PRIVILEGE
 {
@@ -10,7 +9,7 @@ enum class PRIVILEGE
     BIG_BROTHER = 999,
 };
 bool isUserPRIVILEGE(const std::string &s);
-class User : public Base
+class User
 {
 public:
     Name<30, NAME_TYPE::NUM_LETTER> ID;

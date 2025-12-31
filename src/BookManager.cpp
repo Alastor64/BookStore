@@ -1,7 +1,5 @@
 #include "BookManager.hpp"
-#include <iostream>
-#include <iomanip>
-#include <algorithm>
+#include "UserManager.hpp"
 #include "BigBrother.hpp"
 #include "Commander.hpp"
 namespace BookManager

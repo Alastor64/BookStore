@@ -3,6 +3,8 @@
 #include "Stack.hpp"
 #include <vector>
 #include "Map.hpp"
+#include "BigBrother.hpp"
+#include "Commander.hpp"
 namespace UserManager
 {
     IO<User> &users();

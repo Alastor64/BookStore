@@ -8,6 +8,7 @@
 #include "UserManager.hpp"
 #include "Commander.hpp"
 #include <iomanip>
+#include "MyTypedef.hpp"
 typedef Name<64, NAME_TYPE::VISIBLE> str;
 std::vector<int> ans;
 str c;

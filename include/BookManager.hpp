@@ -1,6 +1,10 @@
-#pragma
+#pragma once
+#include <iostream>
+#include <iomanip>
+#include <algorithm>
 #include "Book.hpp"
-#include "UserManager.hpp"
+#include "IO.hpp"
+#include "Map.hpp"
 namespace BookManager // 负责图书相关操作
 {
     IO<Book, 0> &books();                                    // 记录所有Book类，记index为每个Book类在其中的索引

@@ -1,6 +1,11 @@
 #include "BigBrother.hpp"
+#include "Stack.hpp"
+#include "MyTypedef.hpp"
+#include "User.hpp"
 #include "Name.hpp"
-#include "CONSTEXPRS.hpp"
+#include "MyTypedef.hpp"
+const std::string REPORT_SPLIT = " "; //"║";表格列分隔符
+
 namespace BigBrother
 {
     std::vector<Finance> tmp;

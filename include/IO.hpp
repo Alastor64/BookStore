@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 #include <assert.h>
+#include "MyTypedef.hpp"
+#include <iostream>
+const std::string DATA_PATH = std::string("./data/"); // 磁盘数据存储目录
 class IO_base
 {
 

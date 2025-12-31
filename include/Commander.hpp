@@ -1,7 +1,11 @@
 #pragma once
-#include "UserManager.hpp"
 #include "BigBrother.hpp"
-namespace Commander // 负责读入指令，权限判段，执行
+#include <iostream>
+#include <fstream>
+constexpr int MAX_COMMAND_LENGTH = 500;             // 最长可接受指令长度
+constexpr char SPLIT_CHAR = ' ';                    // 指令分词符
+const std::string INVALID = std::string("Invalid"); // 非法反馈输出
+namespace Commander                                 // 负责读入指令，权限判段，执行
 {
     extern Report r;
     typedef std::string::const_iterator it;
