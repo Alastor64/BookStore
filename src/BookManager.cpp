@@ -347,6 +347,7 @@ int BookManager::show(const std::vector<std::string> &S)
         std::cout << tmp.price;
         std::cout << "\t";
         std::cout << tmp.quantity;
+        std::cout << std::endl;
     }
     return 0;
 }

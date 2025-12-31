@@ -11,11 +11,6 @@ public:
     bool isCost; // 1:支出 0:收入
     db cash;     // 金额
 };
-class Log
-{
-public:
-    decltype(time(NULL)) T;
-};
 
 namespace COMMAND_TYPE
 {
