@@ -6,10 +6,9 @@ template <class T>
 class Stack // 未测试
 {
 protected:
-    T topElement;
+    T topElement;  // 栈顶元素
     int n;         // 栈中元素数量
     IO<T, 1> Data; // return IO_base<T, 1>::instance(filename);
-
     int topIndex() // 栈顶索引
     {
         return Data.frontIndex() + (n - 1) * sizeof(T);
@@ -19,8 +18,6 @@ public:
     Stack(const std::string &FN) // 仅读取栈顶，空栈不读取
     {
         Data = IO<T, 1>(FN, 1);
-        // if (!Data.reload())
-        //     Data.initialise();
         n = Data.Get_info(0);
         if (n)
             Data.Read(&topElement, topIndex());
@@ -46,7 +43,6 @@ public:
     {
         if (n)
             update();
-        // std::cout << "push\n";
         n++;
         topElement = tmp;
         Data.Write_info(n, 0);
@@ -55,14 +51,13 @@ public:
         else
             Data.Update(&topElement, topIndex());
     }
-    void clear()
+    void clear() // 清空
     {
         n = 0;
         Data.Write_info(n, 0);
     }
     void pop() // 空栈是未定义行为
     {
-        // printf("pop\n");
         n--;
         Data.Write_info(n, 0);
         if (n)
@@ -72,11 +67,11 @@ public:
     {
         Data.Update(&topElement, topIndex());
     }
-    bool empty()
+    bool empty() // 判断是否为空
     {
         return !n;
     }
-    int size()
+    int size() // 返回大小
     {
         return n;
     }

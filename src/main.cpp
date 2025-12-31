@@ -3,82 +3,82 @@
 #include "Name.hpp"
 #include <string>
 #include <iostream>
-#include <stdio.h>
 #include <vector>
 #include "UserManager.hpp"
 #include "Commander.hpp"
 #include <iomanip>
 #include "MyTypedef.hpp"
-typedef Name<64, NAME_TYPE::VISIBLE> str;
-std::vector<int> ans;
-str c;
-void sol2();
-void testmapID();
+// 以前的调试用的，忽略他们
+//  typedef Name<64, NAME_TYPE::VISIBLE> str;
+//  std::vector<int> ans;
+//  str c;
+//  void sol2();
+//  void testmapID();
 int main()
 {
     Init();
     Commander::receptionist();
     return 0;
 }
-void testmapID()
-{
-    printf("%d\n", int(sizeof(User)));
-    Name<20, NAME_TYPE::COMMON>
-        SS = std::string("ababab");
-    UserManager::mapID();
-    std::array<int, 20> a;
-    a.size();
-    std::string tmp;
-    std::vector<std::string> V;
-    V.clear();
-    for (int i = 0; i < 4; i++)
-    {
-        std::cin >> tmp;
-        V.push_back(tmp);
-    }
-    std::cout << UserManager::userAdd(V, PRIVILEGE::BIG_BROTHER) << std::endl;
-}
-void sol2()
-{
-    Map<str> mp("DATA");
-    int n, x;
-    scanf("%d", &n);
-    std::string S;
-    while (n--)
-    {
-        std::cin >> S;
-        if (S[0] == 'i')
-        {
-            // printf("I\n");#
-            std::cin >> S;
-            c = S;
-            scanf("%d", &x);
-            mp.insert(std::make_pair(c, x));
-        }
-        else if (S[0] == 'd')
-        {
-            // printf("D\n");#
-            std::cin >> S;
-            c = S;
-            scanf("%d", &x);
-            mp.eraze(std::make_pair(c, x));
-        }
-        else if (S[0] == 'f')
-        {
-            // printf("F\n");#
-            std::cin >> S;
-            c = S;
-            mp.show(c, ans);
-            // printf("oo\n");#
-            if (ans.empty())
-                printf("null");
-            else
-                for (int i = 0; i < ans.size(); i++)
-                    printf("%d ", ans.at(i));
-            printf("\n");
-        }
-    }
-}
+// void testmapID()
+// {
+//     printf("%d\n", int(sizeof(User)));
+//     Name<20, NAME_TYPE::COMMON>
+//         SS = std::string("ababab");
+//     UserManager::mapID();
+//     std::array<int, 20> a;
+//     a.size();
+//     std::string tmp;
+//     std::vector<std::string> V;
+//     V.clear();
+//     for (int i = 0; i < 4; i++)
+//     {
+//         std::cin >> tmp;
+//         V.push_back(tmp);
+//     }
+//     std::cout << UserManager::userAdd(V, PRIVILEGE::BIG_BROTHER) << std::endl;
+// }
+// void sol2()
+// {
+//     Map<str> mp("DATA");
+//     int n, x;
+//     scanf("%d", &n);
+//     std::string S;
+//     while (n--)
+//     {
+//         std::cin >> S;
+//         if (S[0] == 'i')
+//         {
+//             // printf("I\n");#
+//             std::cin >> S;
+//             c = S;
+//             scanf("%d", &x);
+//             mp.insert(std::make_pair(c, x));
+//         }
+//         else if (S[0] == 'd')
+//         {
+//             // printf("D\n");#
+//             std::cin >> S;
+//             c = S;
+//             scanf("%d", &x);
+//             mp.eraze(std::make_pair(c, x));
+//         }
+//         else if (S[0] == 'f')
+//         {
+//             // printf("F\n");#
+//             std::cin >> S;
+//             c = S;
+//             mp.show(c, ans);
+//             // printf("oo\n");#
+//             if (ans.empty())
+//                 printf("null");
+//             else
+//                 for (int i = 0; i < ans.size(); i++)
+//                     printf("%d ", ans.at(i));
+//             printf("\n");
+//         }
+//     }
+// }
 // Map<int> mp("mapii");
 // std::vector<int> kk;
 // kk.push_back(1);

@@ -5,7 +5,6 @@ void User::clear()
 }
 bool isUserPRIVILEGE(const std::string &s)
 {
-    // std::cout << s << "\n";
     static const std::string GUEST(
         std::to_string(static_cast<int>(PRIVILEGE::GUEST)));
     static const std::string STAFF(

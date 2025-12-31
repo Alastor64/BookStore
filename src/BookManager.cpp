@@ -35,7 +35,6 @@ int BookManager::split(const decltype(Book::keywords) &S)
     }
     if (keywords.back().empty())
         return 1;
-    // std::cout << keywords.size() << std::endl; // #
     std::sort(keywords.begin(), keywords.end());
     for (int i = 1; i < keywords.size(); i++)
         if (keywords.at(i - 1) == keywords.at(i))
@@ -44,10 +43,8 @@ int BookManager::split(const decltype(Book::keywords) &S)
 }
 int BookManager::addK(int index)
 {
-    // std::cout << keywords.size() << std::endl; // #
     for (int i = 0; i < keywords.size(); i++)
     {
-        // std::cout << "fuck\n"; // #
         mapKeywords().insert(std::make_pair(keywords.at(i), index));
     }
     return 0;
@@ -139,22 +136,16 @@ int BookManager::import(const std::vector<std::string> &S, db &Cost)
 int BookManager::insert(const Book &B, int Index) // 确保keywords已经更新
 {
     mapISBN().insert(std::make_pair(B.ISBN, Index));
-    // if (!B.name.empty())
     mapName().insert(std::make_pair(B.name, Index));
-    // if (!B.author.empty())
     mapAuthor().insert(std::make_pair(B.author, Index));
-    // if (!B.keywords.empty())
     addK(Index);
     return 0;
 }
 int BookManager::eraze(const Book &B, int Index) // 确保keywords已经更新
 {
     mapISBN().eraze(std::make_pair(B.ISBN, Index));
-    // if (!B.name.empty())
     mapName().eraze(std::make_pair(B.name, Index));
-    // if (!B.author.empty())
     mapAuthor().eraze(std::make_pair(B.author, Index));
-    // if (!B.keywords.empty())
     delK(Index);
     return 0;
 }
@@ -163,7 +154,6 @@ int BookManager::splitKeys(const std::string &S, int &which)
     typedef std::string::const_iterator it;
     if (S.front() != '-')
         return -1;
-    // printf("oo\n");
     it L = S.begin(), R;
     while (L != S.end() && *L != '=')
         L++;
@@ -179,12 +169,8 @@ int BookManager::splitKeys(const std::string &S, int &which)
         if (key == BOOK_KEYS.at(j))
             which = j;
     }
-    // printf("oo\n");
     if (which == -1)
         return 2;
-    // printf("oo\n");
-    // if (flag[which])
-    //     return 3;
     R = S.end();
     if (NEED_QUOTE[which])
     {
@@ -202,7 +188,6 @@ int BookManager::splitKeys(const std::string &S, int &which)
     value.assign(L, R);
     if (value.empty())
         return -1;
-    // printf("oo\n");
     return 0;
 }
 int BookManager::modify(const std::vector<std::string> &S)
@@ -221,8 +206,6 @@ int BookManager::modify(const std::vector<std::string> &S)
         int which;
         if (splitKeys(S.at(i), which))
             return 2;
-        // if (value.empty())
-        //     return 3;
         if (flag[which])
             return 3;
         BOOK_INFO info = static_cast<BOOK_INFO>(which);
@@ -290,13 +273,8 @@ int BookManager::show(const std::vector<std::string> &S)
     else
     {
         int which;
-        // for (int i = 0; i < BOOK_KEYS.max_size(); i++)
-        //     flag[i] = 0;
         if (splitKeys(S.at(0), which))
-        {
-            // printf(":%d\n", splitKeys(S.at(0), which)); // #
             return 1;
-        }
         BOOK_INFO info = static_cast<BOOK_INFO>(which);
         if (info == BOOK_INFO::PRICE)
             return 2;
@@ -347,7 +325,6 @@ int BookManager::show(const std::vector<std::string> &S)
         std::cout << "\t";
         tmp.keywords.print();
         std::cout << "\t";
-        // std::cout << std::setprecision(2);
         std::cout << tmp.price;
         std::cout << "\t";
         std::cout << tmp.quantity;

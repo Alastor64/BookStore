@@ -1,10 +1,10 @@
 #pragma once
 #include <string>
-#include <assert.h>
+#include <cassert>
 #include "MyTypedef.hpp"
 #include <iostream>
 const std::string DATA_PATH = std::string("./data/"); // 磁盘数据存储目录
-class IO_base
+class IO_base                                         // 文件读写基类
 {
 
 protected:
@@ -22,25 +22,22 @@ protected:
     IO_base(const std::string &filename, int extra_info = 0, bool NEED_INIT = 0); // 默认extra_info=0 NEED_INIT=0
 
 public:
-    int fileSize;                                // 文件当前能存储类的最大数量
-    int reload(const std::string &FN = "");      // 读取名为FN的文件并绑定，留空则读取原绑定文件
-    void initialise(const std::string &FN = ""); // 初始化名为FN的文件并绑定，留空则初始化原绑定文件
-    int Get_info(int n);                         // 返回第n个额外存储的int（0-base）
-    void Write_info(int tmp, int n);             // 更新第n个额外存储的int（0-base）
-    int Peep();                                  // 返回下一个插入索引 未测试
-    int Write(const void *t);                    // 添加一个类
-    int Write(const void *t, const int num);     // 添加num个类（WARNING 仅用于不使用Delete的类型）
-    void Update(const void *t, const int index);
-    void Update(const void *t, const int index, const int num); // WARNING 仅用于不使用Delete的类型
-    void Read(void *t, const int index);
-    void Read(void *t, const int index, const int num);
-    void Delete(const int index);
-    int frontIndex(); // 类存储起始索引
+    int fileSize;                                                   // 文件当前能存储类的最大数量
+    int reload(const std::string &FN = "");                         // 读取名为FN的文件并绑定，留空则读取原绑定文件
+    void initialise(const std::string &FN = "");                    // 初始化名为FN的文件并绑定，留空则初始化原绑定文件
+    int Get_info(int n);                                            // 返回第n个额外存储的int（0-base）
+    void Write_info(int tmp, int n);                                // 更新第n个额外存储的int（0-base）
+    int Peep();                                                     // 返回下一个插入索引 未测试
+    int Write(const void *t, const int num = 1);                    // 添加num个类（WARNING num!=1仅适用于不使用Delete的实例）
+    void Update(const void *t, const int index, const int num = 1); // 更新num个类（WARNING num!=1仅适用于不使用Delete的实例）
+    void Read(void *t, const int index, const int num = 1);         // 读取num个类（WARNING num!=1仅适用于不使用Delete的实例）
+    void Delete(const int index);                                   // 删除一个类
+    int frontIndex();                                               // 类存储起始索引
     IO_base &operator=(const IO_base &tmp);
 };
 
 template <class T, int EXTRA_INFO = 0>
-class IO : public IO_base
+class IO : public IO_base // 文件读写类
 {
 protected:
     int sizeofT() override
@@ -53,13 +50,13 @@ public:
     IO(const std::string &filename, bool NEED_INIT = 0) : IO_base(filename, EXTRA_INFO, NEED_INIT) {}
     static IO<T, EXTRA_INFO> &instance(const std::string &className)
     {
-        static IO<T, EXTRA_INFO> Instance(className, 1); // WARNING!
+        static IO<T, EXTRA_INFO> Instance(className, 1);
         return Instance;
     }
 };
 
 template <class T, int EXTRA_INFO = 2>
-class MemoryRiver : public IO_base
+class MemoryRiver : public IO_base // 仅用于提交测试正确性
 {
 protected:
     int sizeofT() override

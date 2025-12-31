@@ -9,7 +9,6 @@ namespace Commander
     std::string tmpIn;
     Report r;
     User u;
-    // std::vector<std::string> tmpOut;
 }
 int Commander::scanfString(it &L, std::string &S, const it &end)
 {
@@ -27,8 +26,6 @@ int Commander::scanfString(it &L, std::string &S, const it &end)
 }
 int Commander::interpreter(const std::string &S)
 {
-    // if (!Name<MAX_COMMAND_LENGTH, NAME_TYPE::COMMAND>::check(S))
-    //     return -1;
     it L = S.begin();
     if (scanfString(L, tmp1, S.end())) // 仅有空格
     {
@@ -191,10 +188,6 @@ int Commander::receptionist()
         }
         else if (DEBUG)
             Log << tmpIn << std::endl;
-        //   << E << std::endl;
-        // else
-        //     for (int i = 0; i < tmpOut.size(); i++)
-        //         std::cout << tmpOut.at(i) << std::endl;
     }
     excute("exit");
     return 0;

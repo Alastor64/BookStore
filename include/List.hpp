@@ -7,7 +7,7 @@ constexpr int END_INT = -1;                                               // END
 constexpr std::pair<int, int> END_PII = std::pair<int, int>(-1, END_INT); // END
 constexpr int MAX_BLOCK_SIZE = 512;                                       // 最大块大小
 template <class T>
-class Head
+class Head // 链头
 {
 public:
     Head() {}
@@ -17,12 +17,12 @@ public:
         blockSize = BS;
         index = I;
     }
-    T value;
-    int blockSize;
-    int index;
+    T value;       // 块首值
+    int blockSize; // 块大小
+    int index;     // 块索引
 };
 template <class T>
-class List
+class List // 块状有序链表
 {
 private:
     typedef std::array<T, MAX_BLOCK_SIZE> Array;
@@ -74,9 +74,8 @@ public:
         int j = locateArray(Value, heads.back().blockSize);
         return pii(heads.size() - 1, j);
     }
-    void insert(const T &Value)
+    void insert(const T &Value) // 插入Value
     {
-        // printf("zz\n");
         if (heads.empty())
         {
             tmp.at(0) = Value;
@@ -109,7 +108,7 @@ public:
         }
         heads.update();
     }
-    pii find(const T &Value) // 不存在返回END
+    pii find(const T &Value) // 查找Value 不存在返回END
     {
         if (heads.empty())
             return END_PII;
@@ -121,7 +120,7 @@ public:
         else
             return END_PII;
     }
-    void eraze(const T &Value)
+    void eraze(const T &Value) // 删除至多一个Value
     {
         pii index = find(Value);
         if (index != END_PII)

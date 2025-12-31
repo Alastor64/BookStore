@@ -1,30 +1,28 @@
 #pragma once
 #include <array>
 #include <string>
-#include <math.h>
+#include <cmath>
 #include <string>
 #include <iostream>
 #include <cstdint>
 #include "MyTypedef.hpp"
-enum class NAME_TYPE
+enum class NAME_TYPE // 合法字符类型
 {
     NUM_LETTER, // 数字，字母，下划线
     VISIBLE,    // 除不可见字符以外 ASCII 字符
     COMMON,     // 除不可见字符和英文双引号以外 ASCII 字符
-    COMMAND,
 };
 namespace NAME
 {
-    bool numLetter(char c); // 数字，字母，下划线;
-    bool visible(char c);   // 除不可见字符以外 ASCII 字符;
-    bool common(char c);    // 除不可见字符和英文双引号以外 ASCII 字符
-    bool command(char c);
-    int to_int(const std::string &S, ll &an);
-    int to_real(const std::string &S, db &an);
-    int is_positive_real(const std::string &S);
+    bool numLetter(char c);                     // 数字，字母，下划线;
+    bool visible(char c);                       // 除不可见字符以外 ASCII 字符;
+    bool common(char c);                        // 除不可见字符和英文双引号以外 ASCII 字符
+    int to_int(const std::string &S, ll &an);   // 转换为非负整数
+    int to_real(const std::string &S, db &an);  // 转换为非负实数
+    int is_positive_real(const std::string &S); // 判断是否为非负实数
 }
 template <int size, NAME_TYPE T>
-class Name : public std::array<char, size> // 未测试
+class Name : public std::array<char, size> // 合法字符串类
 {
 
 public:
@@ -58,24 +56,21 @@ public:
                 fg &= NAME::visible(s[i]);
             if (T == NAME_TYPE::COMMON)
                 fg &= NAME::common(s[i]);
-            if (T == NAME_TYPE::COMMAND)
-                fg &= NAME::command(s[i]);
         }
         return fg;
     }
-    void pusk_back(char c)
+    void pusk_back(char c) // 添加一个字符，超过上限会RE
     {
         this->at(length++) = c;
     }
-    void print(int w = 0, char f = ' ') const
+    void print(int w = 0, char f = ' ') const // 输出，左对齐
     {
         for (int i = 0; i < length; i++)
-            // printf("%c", this->at(i));
             std::cout << this->at(i);
         for (int i = length; i < w; i++)
             std::cout << f;
     }
-    bool empty() const
+    bool empty() const // 是否为空串
     {
         return !length;
     }

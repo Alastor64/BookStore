@@ -12,10 +12,6 @@ bool NAME::common(char c)
 {
     return visible(c) && (c != '\"' && c != '\"');
 }
-bool NAME::command(char c)
-{
-    return visible(c) || c == SPLIT_CHAR;
-}
 int NAME::to_int(const std::string &S, ll &an)
 {
     if (S.length() > 10)

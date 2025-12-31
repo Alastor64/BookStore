@@ -101,7 +101,6 @@ int UserManager::su(const std::vector<std::string> &S, PRIVILEGE P)
         if (u.password != C)
             return 4;
     }
-    // std::cout << u.ID.at(0) << " " << u.password.at(0) << " " << u.name.at(0) << "\n";
     logedUsers().push(std::make_pair(index, u.privilege));
     selectedBooks().push(END_INT);
     u.logedTimes++;
@@ -114,10 +113,8 @@ int UserManager::logOut(const std::vector<std::string> &S)
         return -1;
     if (logedUsers().empty())
         return 1;
-    // printf("u=\n");
     int index = logedUsers().top().first;
     users().Read(&u, index);
-    // printf("aab\n");
     u.logedTimes--;
     users().Update(&u, index);
     logedUsers().pop();

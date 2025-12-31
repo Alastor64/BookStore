@@ -3,8 +3,9 @@
 #include "MyTypedef.hpp"
 #include "Name.hpp"
 #include "MyTypedef.hpp"
+#include <sstream>
 const std::string REPORT_SPLIT = " "; //"║";表格列分隔符
-
+const std::string UNIT = "￥";        // 金额单位
 namespace BigBrother
 {
     std::vector<Finance> tmp;
@@ -69,8 +70,6 @@ void Report::headprint()
     std::cout << REPORT_SPLIT << std::setw(6) << COMMAND_TYPE::name[operation] << REPORT_SPLIT;
 }
 
-const std::string FinanceReport::unit = "￥";
-
 FinanceReport::FinanceReport(const Report &tmp) : Report(tmp) {}
 void FinanceReport::print()
 {
@@ -88,7 +87,7 @@ void FinanceReport::print()
         std::cout << '+';
     else
         std::cout << '-';
-    std::cout << std::setw(24) << deltaC << unit;
+    std::cout << std::setw(24) << deltaC << UNIT;
     std::cout << REPORT_SPLIT;
 }
 
@@ -127,7 +126,12 @@ void BookReport::print()
     if (key == BOOK_INFO::ISBN)
         tmp1.print(tmp1.max_size());
     else if (key == BOOK_INFO::PRICE)
-        std::cout << std::setw(13) << tmp3;
+    {
+        std::ostringstream oss;
+        oss.clear();
+        oss << std::fixed << std::setprecision(2) << tmp3 << UNIT;
+        std::cout << std::setw(13) << oss.str();
+    }
     else
         tmp2.print(tmp2.max_size());
     std::cout << REPORT_SPLIT;
@@ -154,17 +158,17 @@ int BigBrother::report_employee(const std::vector<std::string> &S)
     int i = 0, j = 0, k = 0;
     while (i < tmpFr.size() || j < tmpUr.size() || k < tmpBr.size())
     {
-        if (i < tmpFr.size() && tmpFr.at(i).privilege < PRIVILEGE::STAFF)
+        if (i < tmpFr.size() && (tmpFr.at(i).privilege != PRIVILEGE::STAFF || tmpFr.at(i).operation == COMMAND_TYPE::BUY))
         {
             i++;
             continue;
         }
-        if (j < tmpUr.size() && tmpUr.at(j).privilege < PRIVILEGE::STAFF)
+        if (j < tmpUr.size() && tmpUr.at(j).privilege != PRIVILEGE::STAFF)
         {
             j++;
             continue;
         }
-        if (k < tmpUr.size() && tmpUr.at(k).privilege < PRIVILEGE::STAFF)
+        if (k < tmpUr.size() && tmpUr.at(k).privilege != PRIVILEGE::STAFF)
         {
             k++;
             continue;

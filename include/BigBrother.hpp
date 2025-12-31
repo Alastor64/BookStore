@@ -47,8 +47,6 @@ public:
 };
 class FinanceReport : public Report // 单条财务日志
 {
-private:
-    static const std::string unit; // 金额单位
 
 public:
     FinanceReport() {}
@@ -63,31 +61,31 @@ class UserReport : public Report // 单条账户变动日志
 public:
     UserReport() {}
     UserReport(const Report &tmp);
-    decltype(User::ID) user;
-    decltype(User::password) passwd;
-    void print();
+    decltype(User::ID) user;         // 操作对象
+    decltype(User::password) passwd; // 修改后的密码/创建时的密码
+    void print();                    // 输出
 };
-class BookReport : public Report
+class BookReport : public Report // 单条书本信息变动日志
 {
 public:
     BookReport() {}
     BookReport(const Report &tmp);
-    decltype(Book::ISBN) book;
-    BOOK_INFO key;
-    decltype(Book::ISBN) tmp1;
-    decltype(Book::name) tmp2;
-    decltype(Book::price) tmp3;
-    void print();
+    decltype(Book::ISBN) book;  // 操作对象
+    BOOK_INFO key;              // 修改的条目
+    decltype(Book::ISBN) tmp1;  // ISBN修改结果
+    decltype(Book::name) tmp2;  // 书名、作者、关键字修改结果
+    decltype(Book::price) tmp3; // 售价修改结果
+    void print();               // 输出
 };
 namespace BigBrother // 负责日志相关操作
 {
-    Stack<BookReport> &bookLog();
-    Stack<UserReport> &userLog();
-    Stack<FinanceReport> &financeLog();
-    Stack<Finance> &cashLog();                           // 资金变动日志
-    int show_finance(const std::vector<std::string> &S); // 指令 财务记录查询
-    std::string PRIVILEGE_name(PRIVILEGE p);
-    int report_finance(const std::vector<std::string> &S);
-    int report_employee(const std::vector<std::string> &S);
-    int log(const std::vector<std::string> &S);
+    Stack<BookReport> &bookLog();                           // 书本信息变动日志
+    Stack<UserReport> &userLog();                           // 账户变动日志
+    Stack<FinanceReport> &financeLog();                     // 财务日志
+    Stack<Finance> &cashLog();                              // 资金变动日志
+    int show_finance(const std::vector<std::string> &S);    // 指令 财务记录查询
+    std::string PRIVILEGE_name(PRIVILEGE p);                // 权限对应身份名
+    int report_finance(const std::vector<std::string> &S);  // 指令 生成财务记录报告
+    int report_employee(const std::vector<std::string> &S); // 生成全体员工工作情况
+    int log(const std::vector<std::string> &S);             // 生成日志
 }

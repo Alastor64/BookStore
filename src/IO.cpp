@@ -4,7 +4,7 @@
 void IO_base::updateinfo()
 {
     file = fopen(file_name.c_str(), "rb+");
-    assert(file && "updateinfo failed"[0]);
+    assert(file && "updateinfo failed");
     fseek(file, 0, SEEK_SET);
     fwrite(&last, sizeof(int), 1, file);
     fwrite(&back, sizeof(int), 1, file);
@@ -52,7 +52,6 @@ int IO_base::reload(const std::string &FN)
     file = fopen(file_name.c_str(), "rb+");
     if (file)
     {
-        // std::cout << "reloading " << file_name << std::endl;#
         fread(&last, sizeof(int), 1, file);
         fread(&back, sizeof(int), 1, file);
         fread(&fileSize, sizeof(int), 1, file);
@@ -109,18 +108,13 @@ int IO_base::Peep()
         return last;
 }
 
-int IO_base::Write(const void *t)
-{
-    return Write(t, 1);
-}
-
 int IO_base::Write(const void *t, const int num)
 {
     int R;
     if (last == -1)
     {
         file = fopen(file_name.c_str(), "ab");
-        // assert(file && ("write failed")[0]);
+        assert(file && "write failed");
         if (!file)
         {
             std::cout << file_name << std::endl;
@@ -151,32 +145,20 @@ int IO_base::Write(const void *t, const int num)
     return R;
 }
 
-void IO_base::Update(const void *t, const int index)
-{
-    Update(t, index, 1);
-}
-
 void IO_base::Update(const void *t, const int index, const int num)
 {
-    // printf("%d*%d\n", sizeofT(), num);
-    assert(index < back && index >= info_len && "illegal index");
+    assert(index < back && index >= frontIndex() && "illegal index");
     file = fopen(file_name.c_str(), "rb+");
     assert(file && ("update failed")[0]);
     fseek(file, index, SEEK_SET);
     fwrite(t, sizeofT(), num, file);
     fclose(file);
-    // printf("zp\n");
     updateinfo();
 }
 
-void IO_base::Read(void *t, const int index)
-{
-    Read(t, index, 1);
-}
 void IO_base::Read(void *t, const int index, const int num)
 {
-    // printf("index:%d\n", index);#
-    assert(index < back /* && index >= info_len && "illegal index"[0]*/);
+    assert(index < back && index >= frontIndex() && "illegal index");
     file = fopen(file_name.c_str(), "rb+");
     assert(file && ("read failed")[0]);
     fseek(file, index, SEEK_SET);
@@ -187,7 +169,7 @@ void IO_base::Read(void *t, const int index, const int num)
 
 void IO_base::Delete(const int index)
 {
-    assert(index < back && index >= info_len && "illegal index");
+    assert(index < back && index >= frontIndex() && "illegal index");
     file = fopen(file_name.c_str(), "rb+");
     assert(file && ("delete failed")[0]);
     fseek(file, index, SEEK_SET);

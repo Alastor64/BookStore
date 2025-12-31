@@ -4,7 +4,7 @@
 #include <vector>
 #include <cstdint>
 template <class K>
-class Map : public List<std::pair<K, int>>
+class Map : public List<std::pair<K, int>> // 字典
 {
 private:
     typedef std::pair<K, int> pKi;
@@ -12,7 +12,7 @@ private:
 
 public:
     Map(const std::string &FN) : List<pKi>(FN) {}
-    void load(std::vector<int> &Ans)
+    void load(std::vector<int> &Ans) // 全部载入至Ans
     {
         Ans.clear();
         for (int i = 0; i < this->heads.size(); i++)

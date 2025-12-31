@@ -7,7 +7,6 @@ void Init()
         FS::create_directory("data");
     UserManager::logedClear();
     int index = UserManager::mapID().show(std::string("root"));
-    // std::cout << index << "\n";
     std::vector<std::string> tmp;
     if (index == END_INT)
     {
@@ -17,14 +16,7 @@ void Init()
         tmp.push_back(std::to_string(static_cast<int>(PRIVILEGE::BOSS)));
         tmp.push_back("Alastor");
         int _ = UserManager::userAdd(tmp, PRIVILEGE::BIG_BROTHER);
-        // printf("oo\n");
-        // std::cout << _ << "\n";
     }
-    // tmp.clear();
-    // tmp.push_back("root");
-    // tmp.push_back("sjtu");
-    // UserManager::su(tmp, PRIVILEGE::BIG_BROTHER);
-    // printf("oo\n");
 }
 
 IO<User> &UserManager::users()
@@ -73,7 +65,6 @@ Map<decltype(Book::name)> &BookManager::mapName()
 }
 Map<decltype(Book::keywords)> &BookManager::mapKeywords()
 {
-    // printf("fuck!\n"); // #
     static Map<decltype(Book::keywords)> tmp("BooksSortedByKeywords");
     return tmp;
 }
